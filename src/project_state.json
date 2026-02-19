@@ -1,0 +1,259 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 9,
+  "summary": "Golf social dating app connecting single golfers through online profiles with handicap and social preferences (business, pleasure, casual, romantic). Features gender-based and couples searching, location-based map showing singles by proximity to golf courses, course booking integration, course directory, sponsors page, and event hosting.",
+  "architectural_notes": [
+    "Social dating platform focused on golf community",
+    "Location-based services required for proximity matching",
+    "Integration with external golf course booking systems",
+    "User authentication and profile management system",
+    "Real-time chat functionality needed"
+  ],
+  "known_issues": [
+    "Post-login pages lack content and functional navigation",
+    "Get Started button on landing page is non-functional"
+  ],
+  "isFixRequest": true,
+  "existing_features": [
+    {
+      "id": "feature-create-location-based-map-view-that-displays-online-single-golfers-by-their-proximity-to-the-user-s-location-or-specific-golf-course-locations",
+      "title": "Create location-based map view that displays online single golfers by their proximity to the user's location or specific golf course locations",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-main-landing-page-with-sign-up-button-log-in-button-and-golf-course-background-image-as-backdrop",
+      "title": "Build main landing page with sign up button, log in button, and golf course background image as backdrop",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-course-booking-search-feature-that-allows-users-to-search-for-golf-course-bookings-and-links-to-local-booking-sites-or-course-websites",
+      "title": "Implement course booking search feature that allows users to search for golf course bookings and links to local booking sites or course websites",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-course-directory-page-that-lists-golf-courses-with-details-and-contact-information",
+      "title": "Create course directory page that lists golf courses with details and contact information",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-sponsors-page-to-display-sponsor-information-and-branding",
+      "title": "Build sponsors page to display sponsor information and branding",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-event-host-page-where-users-can-view-and-create-golf-events",
+      "title": "Create event host page where users can view and create golf events",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-chat-system-that-allows-matched-users-to-communicate-with-each-other-through-real-time-or-async-messaging",
+      "title": "Implement chat system that allows matched users to communicate with each other through real-time or async messaging",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-design-and-apply-a-cohesive-visual-theme-with-golf-inspired-colors-greens-earth-tones-clean-typography-and-modern-layout-patterns-that-evoke-sophistication-and-outdoor-sporting-elegance",
+      "title": "Design and apply a cohesive visual theme with golf-inspired colors (greens, earth tones), clean typography, and modern layout patterns that evoke sophistication and outdoor sporting elegance",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-replace-the-golf-ball-icon-in-the-header-navigation-with-the-lime-greens-brand-logo",
+      "title": "Replace the golf ball icon in the header navigation with the Lime Greens™ brand logo",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-landing-page-hero-section-to-feature-the-lime-greens-brand-logo-prominently",
+      "title": "Update the landing page hero section to feature the Lime Greens™ brand logo prominently",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-render-the-generated-lime-greens-logo-image-as-a-static-asset-from-frontend-public-assets-generated",
+      "title": "Render the generated Lime Greens™ logo image as a static asset from frontend/public/assets/generated",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-populate-the-mapview-page-with-functional-content-showing-matched-golfer-profiles-in-an-interactive-grid-or-map-interface-with-filtering-options-for-handicap-range-distance-and-social-preference",
+      "title": "Populate the MapView page with functional content showing matched golfer profiles in an interactive grid or map interface with filtering options for handicap range, distance, and social preference",
+      "reqIds": [
+        "REQ-14"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-enhance-the-coursedirectory-page-with-functional-search-and-filter-controls-for-course-name-location-and-amenities",
+      "title": "Enhance the CourseDirectory page with functional search and filter controls for course name, location, and amenities",
+      "reqIds": [
+        "REQ-15"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-functional-navigation-buttons-and-content-sections-to-the-eventspage-including-upcoming-events-list-past-events-archive-and-rsvp-functionality",
+      "title": "Add functional navigation buttons and content sections to the EventsPage including upcoming events list, past events archive, and RSVP functionality",
+      "reqIds": [
+        "REQ-16"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-functional-message-composition-and-conversation-management-in-the-chatpage-with-message-history-typing-indicators-and-read-status",
+      "title": "Implement functional message composition and conversation management in the ChatPage with message history, typing indicators, and read status",
+      "reqIds": [
+        "REQ-17"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-functional-sponsor-cards-to-the-sponsorspage-with-clickable-logos-descriptions-and-external-links-to-sponsor-websites",
+      "title": "Add functional sponsor cards to the SponsorsPage with clickable logos, descriptions, and external links to sponsor websites",
+      "reqIds": [
+        "REQ-18"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-make-all-header-navigation-links-and-buttons-functional-across-all-authenticated-pages-with-active-state-indicators",
+      "title": "Make all header navigation links and buttons functional across all authenticated pages with active state indicators",
+      "reqIds": [
+        "REQ-19"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-enhance-the-coursebooking-page-with-functional-search-filters-for-date-time-number-of-players-and-course-location-with-real-time-availability-display",
+      "title": "Enhance the CourseBooking page with functional search filters for date, time, number of players, and course location with real-time availability display",
+      "reqIds": [
+        "REQ-20"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-click-handler-to-the-get-started-button-on-the-landing-page-that-initiates-internet-identity-authentication-flow",
+      "title": "Add click handler to the Get Started button on the landing page that initiates Internet Identity authentication flow",
+      "reqIds": [
+        "REQ-21"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "User profiles with handicap and social preference fields",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Search filters for gender matching and couples/twosome searches",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Location-based map showing singles near golf courses",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Main landing page with golf course backdrop, sign up and log in buttons",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Course booking search integration with local booking sites",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Course directory",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-7",
+      "summary": "Sponsors page",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-8",
+      "summary": "Event host page",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-9",
+      "summary": "Chat system for users to communicate",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-10",
+      "summary": "Create user profile system with fields for handicap (numeric), gender (male/female/couple), social preference (business/pleasure/casual/romantic), location (coordinates or address), and bio text",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-11",
+      "summary": "Implement search functionality that filters users by gender preference matching (male searching female, female searching male, couples searching other twosomes)",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-12",
+      "summary": "Add Lime Greens™ brand logo to the app",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-13",
+      "summary": "Add functional content and working buttons/navigation to all pages after user login",
+      "reqIds": [],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "Golf Social Dating App",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

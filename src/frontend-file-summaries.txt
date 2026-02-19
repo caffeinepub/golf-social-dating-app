@@ -1,0 +1,15 @@
+{
+  "frontend/src/App.tsx": "Main application component with TanStack Router setup, authentication flow, profile setup check, and protected routes with proper React component naming for hooks compliance.",
+  "frontend/src/hooks/useQueries.ts": "React Query hooks for all backend operations including user profiles, matches, courses, sponsors, events with RSVP mutations, and messaging with proper cache invalidation and type-safe event data handling.",
+  "frontend/src/components/Layout.tsx": "Shared layout component with navigation header featuring active route highlighting using courseGreen background, functional navigation links, logout button with query cache clearing, and footer with Lime Greens™ branding and caffeine.ai attribution.",
+  "frontend/src/components/ProfileSetup.tsx": "Profile setup form component for new users to enter handicap, gender preferences, social preferences, location coordinates, and bio before accessing the app.",
+  "frontend/src/pages/LandingPage.tsx": "Landing page with golf course hero background, prominent Lime Greens™ brand logo, functional Get Started and Sign In buttons with proper Internet Identity authentication flow including error handling, app description, and feature highlights with Tailwind v3 compliant classes.",
+  "frontend/src/pages/MapView.tsx": "Discover page with interactive golfer profile cards featuring avatar images, handicap/gender/preference badges, distance calculation, and filter controls for handicap range, max distance, and social preference with action buttons to message or view profiles.",
+  "frontend/src/pages/CourseDirectory.tsx": "Course directory page with real-time search input and location filter dropdown, displaying course cards with name, local/regional badges, website links, and book tee time buttons.",
+  "frontend/src/pages/CourseBooking.tsx": "Course booking page with comprehensive search filters including date picker, time slot selector, number of players dropdown, distance filter, and course cards with booking buttons linking to external websites.",
+  "frontend/src/pages/SponsorsPage.tsx": "Sponsors page displaying sponsor cards with logo placeholders, names, category badges, descriptions, and external website links with proper error handling for missing images.",
+  "frontend/src/pages/EventsPage.tsx": "Events page with upcoming/past event sections, RSVP functionality with toggle states, attendee counts, create event dialog with validation, and chronological event display with formatted dates.",
+  "frontend/src/pages/ChatPage.tsx": "Chat page with two-column layout showing matched users list with avatars and profile info, message thread with sender/recipient alignment, read status indicators, message input with Enter key support, and auto-scrolling message history.",
+  "frontend/src/index.css": "Global styles with golf-inspired OKLCH color system featuring fairway green, course green, grass green, sand tan, and earth brown colors for light and dark modes.",
+  "frontend/tailwind.config.js": "Tailwind configuration extended with custom golf-inspired color tokens, Inter font family, custom shadows, and design system tokens."
+}

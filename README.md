@@ -1,2 +1,3 @@
-# golf-social-dating-app
-Exported from Caffeine project: Golf Social Dating App
+## 
+
+To run app build and run docker image: `docker build -t app . docker run -it --network host app`

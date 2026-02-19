@@ -1,0 +1,39 @@
+{
+  "kind": "build_request",
+  "title": "Make Get Started button functional on landing page",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-21",
+      "text": "Add click handler to the Get Started button on the landing page that initiates Internet Identity authentication flow",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-user-final"
+        ],
+        "quotes": [
+          "No the get started button doesn't do anything"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Clicking the Get Started button triggers the Internet Identity login process",
+        "After successful authentication, the user is redirected to either profile setup (if new user) or the MapView page (if existing user)",
+        "The button behavior matches the existing Login button functionality"
+      ]
+    }
+  ],
+  "constraints": [
+    "Use the existing useInternetIdentity hook for authentication",
+    "Maintain consistency with the Login button's authentication flow",
+    "Do not modify the LandingPage.tsx layout or styling beyond the button functionality"
+  ],
+  "nonGoals": [
+    "Changing the visual appearance of the Get Started button",
+    "Modifying the authentication system or Internet Identity integration",
+    "Adding new user flows beyond the existing authentication pattern"
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  }
+}
