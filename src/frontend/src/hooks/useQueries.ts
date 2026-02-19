@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useActor } from './useActor';
-import type { UserProfile, Event, Message, Promise_ } from '../backend';
+import type { UserProfile, Event, Message, Promise_, CourseWithProfiles } from '../backend';
 import { Principal } from '@dfinity/principal';
 
 export function useGetCallerUserProfile() {
@@ -34,6 +34,8 @@ export function useSaveCallerUserProfile() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['currentUserProfile'] });
+      queryClient.invalidateQueries({ queryKey: ['courseDirectory'] });
+      queryClient.invalidateQueries({ queryKey: ['courseWithMembers'] });
     },
   });
 }
@@ -61,6 +63,32 @@ export function useGetCourseDirectory() {
       return actor.getCourseDirectory();
     },
     enabled: !!actor && !isFetching,
+  });
+}
+
+export function useGetCourseWithMembers(courseName: string) {
+  const { actor, isFetching } = useActor();
+
+  return useQuery<CourseWithProfiles | null>({
+    queryKey: ['courseWithMembers', courseName],
+    queryFn: async () => {
+      if (!actor) return null;
+      return actor.getCourseWithMembers(courseName);
+    },
+    enabled: !!actor && !isFetching && !!courseName,
+  });
+}
+
+export function useGetUserProfile(user: Principal | null) {
+  const { actor, isFetching } = useActor();
+
+  return useQuery<UserProfile | null>({
+    queryKey: ['userProfile', user?.toString()],
+    queryFn: async () => {
+      if (!actor || !user) return null;
+      return actor.getUserProfile(user);
+    },
+    enabled: !!actor && !isFetching && !!user,
   });
 }
 

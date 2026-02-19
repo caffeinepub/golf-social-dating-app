@@ -64,6 +64,10 @@ export const Promise = IDL.Record({
   'name' : IDL.Text,
   'website' : IDL.Text,
 });
+export const CourseWithProfiles = IDL.Record({
+  'memberProfiles' : IDL.Vec(UserProfile),
+  'details' : Promise,
+});
 export const Message = IDL.Record({
   'content' : IDL.Text,
   'read' : IDL.Bool,
@@ -114,6 +118,11 @@ export const idlService = IDL.Service({
   'getCourseDirectory' : IDL.Func(
       [],
       [IDL.Vec(IDL.Tuple(IDL.Text, Promise))],
+      ['query'],
+    ),
+  'getCourseWithMembers' : IDL.Func(
+      [IDL.Text],
+      [IDL.Opt(CourseWithProfiles)],
       ['query'],
     ),
   'getMessages' : IDL.Func([IDL.Principal], [IDL.Vec(Message)], ['query']),
@@ -187,6 +196,10 @@ export const idlFactory = ({ IDL }) => {
     'name' : IDL.Text,
     'website' : IDL.Text,
   });
+  const CourseWithProfiles = IDL.Record({
+    'memberProfiles' : IDL.Vec(UserProfile),
+    'details' : Promise,
+  });
   const Message = IDL.Record({
     'content' : IDL.Text,
     'read' : IDL.Bool,
@@ -237,6 +250,11 @@ export const idlFactory = ({ IDL }) => {
     'getCourseDirectory' : IDL.Func(
         [],
         [IDL.Vec(IDL.Tuple(IDL.Text, Promise))],
+        ['query'],
+      ),
+    'getCourseWithMembers' : IDL.Func(
+        [IDL.Text],
+        [IDL.Opt(CourseWithProfiles)],
         ['query'],
       ),
     'getMessages' : IDL.Func([IDL.Principal], [IDL.Vec(Message)], ['query']),

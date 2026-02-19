@@ -1,200 +1,75 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Create comprehensive sign-up page with profile information fields",
+  "title": "Add user messaging functionality for course members to connect",
   "requirements": [
     {
-      "id": "REQ-22",
-      "summary": "Create SignUpPage component and wire navigation from landing page Get Started button",
+      "id": "REQ-49",
+      "summary": "Add 'Message' button to member profile cards in CourseDirectory that initiates conversations",
       "acceptanceCriteria": [
-        "SignUpPage component exists in frontend/src/pages/",
-        "Route is configured in App.tsx to navigate to sign-up page",
-        "Get Started button on LandingPage navigates to the sign-up route"
+        "Each member profile card in the CourseDirectory displays a 'Message' button",
+        "Clicking the 'Message' button navigates to the ChatPage with that member's conversation pre-selected",
+        "Button is styled consistently with the golf theme using courseGreen or fairwayGreen colors"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/pages/SignUpPage.tsx",
-          "operation": "create",
-          "description": "Create SignUpPage component with comprehensive form layout including all profile fields (age, handicap, gender, seeking preference, bio, location, home course, profile photo). Use shadcn/ui form components for consistency with existing design system. Apply golf-themed styling using the fairway green, sand tan, and grass green color palette from the Tailwind configuration."
+          "path": "frontend/src/pages/CourseDirectory.tsx",
+          "operation": "modify",
+          "description": "Add a 'Message' button to each member profile card within the expandable course sections. The button should be styled with courseGreen/fairwayGreen colors and positioned alongside existing profile actions. On click, navigate to ChatPage using the member's Principal as navigation state to pre-select their conversation. Use the useNavigate hook from TanStack Router to pass the target user Principal."
+        }
+      ]
+    },
+    {
+      "id": "REQ-50",
+      "summary": "Add 'Message' button to ProfileDetailPage for initiating conversations with profile owners",
+      "acceptanceCriteria": [
+        "ProfileDetailPage displays a prominent 'Message' button below or alongside the profile information",
+        "Clicking the button navigates to the ChatPage with the profile owner's conversation active",
+        "Button is disabled if viewing own profile with appropriate visual feedback"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/ProfileDetailPage.tsx",
+          "operation": "modify",
+          "description": "Add a 'Message' button prominently positioned below the profile information section. Use the authorization component's identity comparison to disable the button when viewing your own profile (compare current user's Principal with the profile owner's Principal). Style the button with golf theme colors (courseGreen) and show disabled state with opacity and a cursor style. On click, navigate to ChatPage with the profile owner's Principal passed as navigation state."
+        }
+      ]
+    },
+    {
+      "id": "REQ-51",
+      "summary": "Add 'Message' button to match profile cards in MapView for initiating conversations",
+      "acceptanceCriteria": [
+        "Each match profile card displays a 'Message' button alongside the 'View Profile' button",
+        "Clicking the button navigates to the ChatPage with that user's conversation pre-selected",
+        "Button styling is consistent with other messaging entry points across the app"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/MapView.tsx",
+          "operation": "modify",
+          "description": "Add a 'Message' button to each match profile card, positioned alongside the existing 'View Profile' button. Style consistently with other messaging entry points using courseGreen/fairwayGreen colors. On click, navigate to ChatPage with the matched user's Principal passed as navigation state to pre-select their conversation thread."
+        }
+      ]
+    },
+    {
+      "id": "REQ-52",
+      "summary": "Update ChatPage to automatically open conversations when navigated with a target user Principal",
+      "acceptanceCriteria": [
+        "ChatPage accepts a target user Principal ID via route navigation state or URL parameter",
+        "If a conversation with the target user exists, it is automatically selected and displayed",
+        "If no conversation exists, a new empty conversation thread is displayed with the target user",
+        "Message input field is focused and ready for the user to compose their first message"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/ChatPage.tsx",
+          "operation": "modify",
+          "description": "Update ChatPage to accept a target user Principal via route navigation state (check location.state from TanStack Router). On component mount or when the target Principal changes, check if a conversation with that user exists in the matches list. If found, automatically select it and display the message thread. If not found, initialize a new empty conversation view showing the target user's profile information with an empty message list. Focus the message input field using useEffect and a ref. Ensure the auto-selection logic runs after matches data is loaded to avoid race conditions."
         },
         {
           "path": "frontend/src/App.tsx",
           "operation": "modify",
-          "description": "Add route configuration for /sign-up path that renders SignUpPage component. Ensure the route is accessible before authentication (public route) so new users can access the sign-up form."
-        },
-        {
-          "path": "frontend/src/pages/LandingPage.tsx",
-          "operation": "modify",
-          "description": "Update the Get Started button to navigate to the /sign-up route using React Router navigation. Ensure the button triggers navigation on click."
-        }
-      ]
-    },
-    {
-      "id": "REQ-23",
-      "summary": "Add age input field with numeric validation to sign-up form",
-      "acceptanceCriteria": [
-        "Age field accepts numeric input only",
-        "Field is clearly labeled",
-        "Validation ensures reasonable age range (e.g., 18-100)"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/SignUpPage.tsx",
-          "operation": "modify",
-          "description": "Add age input field using shadcn/ui Input component with type='number'. Implement validation to ensure age is between 18 and 100. Display clear label 'Age' and validation error messages when input is invalid. Use form state management to track age value."
-        }
-      ]
-    },
-    {
-      "id": "REQ-24",
-      "summary": "Add handicap input field with golf handicap range validation to sign-up form",
-      "acceptanceCriteria": [
-        "Handicap field accepts numeric input",
-        "Field validates golf handicap range (typically -10 to 54)",
-        "Field is clearly labeled with golf terminology"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/SignUpPage.tsx",
-          "operation": "modify",
-          "description": "Add handicap input field using shadcn/ui Input component with type='number'. Implement validation to ensure handicap is between -10 and 54 (standard golf handicap range). Display clear label 'Golf Handicap' with optional helper text explaining the range. Show validation errors when input is outside valid range."
-        }
-      ]
-    },
-    {
-      "id": "REQ-25",
-      "summary": "Add gender selection field with male, female, and couple options",
-      "acceptanceCriteria": [
-        "Selection control (radio buttons or dropdown) includes male, female, and couple options",
-        "Only one option can be selected at a time",
-        "Field is required before form submission"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/SignUpPage.tsx",
-          "operation": "modify",
-          "description": "Add gender selection field using shadcn/ui RadioGroup component with three options: Male, Female, and Couple. Ensure only one option can be selected at a time. Display clear label 'I am' and mark the field as required. Store selected value matching the backend Gender enum."
-        }
-      ]
-    },
-    {
-      "id": "REQ-26",
-      "summary": "Add seeking preference field to indicate desired match type (male, female, or couple)",
-      "acceptanceCriteria": [
-        "Selection control includes options: male, female, couple",
-        "User can select what type of match they are seeking",
-        "Field is clearly labeled to distinguish from gender field"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/SignUpPage.tsx",
-          "operation": "modify",
-          "description": "Add seeking preference field using shadcn/ui RadioGroup component with three options: Male, Female, and Couple. Display clear label 'Looking For' to distinguish from the gender field. Mark the field as required and store value matching the backend Gender enum (lookingFor field)."
-        }
-      ]
-    },
-    {
-      "id": "REQ-27",
-      "summary": "Add bio textarea field for user to describe themselves, likes, dislikes, and ideal golf partner",
-      "acceptanceCriteria": [
-        "Multi-line textarea allows extended text input",
-        "Field includes placeholder text or label guiding users to share likes, dislikes, and ideal match description",
-        "Character limit is reasonable (e.g., 500-1000 characters)"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/SignUpPage.tsx",
-          "operation": "modify",
-          "description": "Add bio field using shadcn/ui Textarea component with multi-line input support. Display label 'About Me & My Ideal Golf Partner' with placeholder text guiding users to share likes, dislikes, and ideal match preferences. Implement character limit validation (500-1000 characters) with character counter display. Store value in the bio field."
-        }
-      ]
-    },
-    {
-      "id": "REQ-28",
-      "summary": "Add location input section for capturing user's geographical coordinates",
-      "acceptanceCriteria": [
-        "Location input field accepts address or coordinates",
-        "Field is clearly labeled",
-        "Input validates location format"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/SignUpPage.tsx",
-          "operation": "modify",
-          "description": "Add location section with two numeric input fields for latitude and longitude using shadcn/ui Input components. Display clear labels 'Latitude' and 'Longitude' with helper text. Implement validation to ensure valid coordinate ranges (latitude: -90 to 90, longitude: -180 to 180). Store values in the location.lat and location.long fields matching the backend Coordinates type."
-        }
-      ]
-    },
-    {
-      "id": "REQ-29",
-      "summary": "Add home course input field for user's primary golf course name",
-      "acceptanceCriteria": [
-        "Home course field accepts text input for course name",
-        "Field is clearly labeled as home course",
-        "Field allows users to identify their regular golf course"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/SignUpPage.tsx",
-          "operation": "modify",
-          "description": "Add home course field using shadcn/ui Input component with type='text'. Display clear label 'Home Course' with optional helper text explaining users should enter their primary golf course name. Store value in the homeCourse field."
-        }
-      ]
-    },
-    {
-      "id": "REQ-30",
-      "summary": "Add profile photo upload option with image preview and validation",
-      "acceptanceCriteria": [
-        "File input control allows image file selection",
-        "Supported formats include common image types (JPEG, PNG)",
-        "Preview of selected image is displayed before submission",
-        "File size validation prevents oversized uploads"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/SignUpPage.tsx",
-          "operation": "modify",
-          "description": "Add profile photo upload section using shadcn/ui Input component with type='file' and accept='image/jpeg,image/png'. Implement file selection handler that reads the file as Uint8Array and displays image preview. Add file size validation (e.g., max 5MB) and show error messages for invalid files. Use ExternalBlob.fromBytes() from the blob-storage component to handle the image data. Store the blob reference in the profilePhoto field. Display the placeholder image from frontend/public/assets/generated/avatar-placeholder.dim_128x128.png before upload. Verify the blob-storage component's usage instructions before implementing."
-        }
-      ]
-    },
-    {
-      "id": "REQ-31",
-      "summary": "Apply golf-themed styling to sign-up page using existing design system",
-      "acceptanceCriteria": [
-        "Page uses golf-themed color palette from existing design system (fairway green, sand tan, grass green)",
-        "Layout and component styling matches existing page patterns",
-        "Visual elements evoke golf and outdoor sporting elegance",
-        "All form components use shadcn/ui components for consistency"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/SignUpPage.tsx",
-          "operation": "modify",
-          "description": "Apply golf-themed styling to the sign-up page using Tailwind classes referencing the custom color palette (fairway green, sand tan, grass green) defined in frontend/tailwind.config.js. Use consistent layout patterns matching existing pages like ProfileSetup.tsx. Add visual elements such as the logo from frontend/public/assets/generated/lime-greens-logo.dim_400x200.png and golf-themed icons. Ensure all form components use shadcn/ui for consistency with the existing design system."
-        }
-      ]
-    },
-    {
-      "id": "REQ-37",
-      "summary": "Wire sign-up form submission to backend with validation, error handling, and navigation",
-      "acceptanceCriteria": [
-        "Form submission calls backend profile creation mutation",
-        "All required fields are validated before submission",
-        "Success state navigates user to main application",
-        "Error states display helpful messages to user",
-        "Loading states provide feedback during submission"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/SignUpPage.tsx",
-          "operation": "modify",
-          "description": "Implement form submission handler that collects all field values (age, handicap, gender, lookingFor, bio, location coordinates, homeCourse, profilePhoto), validates required fields, and calls the saveCallerUserProfile mutation from useQueries.ts. Use the authorization component to ensure the user is authenticated before submission. Implement loading state with disabled form fields during submission. On success, navigate to the /map route (main application). On error, display toast notification with error message. Handle validation errors and display field-specific error messages. Verify the authorization component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/src/hooks/useQueries.ts",
-          "operation": "modify",
-          "description": "Ensure the useSaveCallerUserProfile mutation hook properly handles the complete UserProfile type including all new fields (age, lookingFor, homeCourse, profilePhoto). Verify mutation invalidates the currentUserProfile query on success for cache consistency."
+          "description": "Update the ChatPage route definition to accept navigation state containing a target user Principal. Ensure the route properly passes location state to the ChatPage component so it can access the target Principal for auto-conversation selection."
         }
       ]
     }

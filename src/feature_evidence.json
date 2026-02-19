@@ -2,12 +2,10 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-create-a-new-signuppage-component-that-users-navigate-to-when-clicking-the-get-started-button-on-the-landing-page",
-      "featureTitle": "Create a new SignUpPage component that users navigate to when clicking the Get Started button on the landing page",
+      "featureId": "feature-add-a-message-button-to-each-member-profile-card-in-the-coursedirectory-page-that-initiates-a-new-conversation-with-that-member",
+      "featureTitle": "Add a 'Message' button to each member profile card in the CourseDirectory page that initiates a new conversation with that member",
       "files": [
-        "frontend/src/App.tsx",
-        "frontend/src/pages/LandingPage.tsx",
-        "frontend/src/pages/SignUpPage.tsx"
+        "frontend/src/pages/CourseDirectory.tsx"
       ],
       "components": [
         "authorization@4.0.0",
@@ -19,15 +17,15 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-22"
+        "REQ-49"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-add-age-input-field-to-the-sign-up-form-with-numeric-validation",
-      "featureTitle": "Add age input field to the sign-up form with numeric validation",
+      "featureId": "feature-add-a-message-button-to-the-profiledetailpage-that-allows-users-to-initiate-a-conversation-with-the-profile-owner",
+      "featureTitle": "Add a 'Message' button to the ProfileDetailPage that allows users to initiate a conversation with the profile owner",
       "files": [
-        "frontend/src/pages/SignUpPage.tsx"
+        "frontend/src/pages/ProfileDetailPage.tsx"
       ],
       "components": [
         "authorization@4.0.0",
@@ -39,15 +37,15 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-23"
+        "REQ-50"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-add-handicap-input-field-to-the-sign-up-form-with-numeric-validation-for-golf-handicap-range",
-      "featureTitle": "Add handicap input field to the sign-up form with numeric validation for golf handicap range",
+      "featureId": "feature-add-a-message-button-to-each-match-profile-card-in-the-mapview-page-that-initiates-a-conversation-with-the-matched-user",
+      "featureTitle": "Add a 'Message' button to each match profile card in the MapView page that initiates a conversation with the matched user",
       "files": [
-        "frontend/src/pages/SignUpPage.tsx"
+        "frontend/src/pages/MapView.tsx"
       ],
       "components": [
         "authorization@4.0.0",
@@ -59,15 +57,15 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-24"
+        "REQ-51"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-add-gender-selection-field-with-options-for-male-female-or-couple",
-      "featureTitle": "Add gender selection field with options for male, female, or couple",
+      "featureId": "feature-update-chatpage-to-automatically-open-or-create-a-conversation-when-navigated-to-with-a-specific-user-principal-id-passed-via-route-parameters-or-state",
+      "featureTitle": "Update ChatPage to automatically open or create a conversation when navigated to with a specific user Principal ID passed via route parameters or state",
       "files": [
-        "frontend/src/pages/SignUpPage.tsx"
+        "frontend/src/pages/ChatPage.tsx"
       ],
       "components": [
         "authorization@4.0.0",
@@ -79,147 +77,7 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-25"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-add-seeking-preference-field-with-options-for-male-female-or-couple-to-indicate-what-type-of-match-the-user-is-looking-for",
-      "featureTitle": "Add seeking preference field with options for male, female, or couple to indicate what type of match the user is looking for",
-      "files": [
-        "frontend/src/pages/SignUpPage.tsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "blob-storage@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-26"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-add-bio-textarea-field-where-users-can-describe-their-likes-dislikes-themselves-and-their-ideal-golf-partner",
-      "featureTitle": "Add bio textarea field where users can describe their likes, dislikes, themselves, and their ideal golf partner",
-      "files": [
-        "frontend/src/pages/SignUpPage.tsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "blob-storage@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-27"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-add-location-input-section-to-the-sign-up-form-for-capturing-user-s-geographical-location",
-      "featureTitle": "Add location input section to the sign-up form for capturing user's geographical location",
-      "files": [
-        "frontend/src/pages/SignUpPage.tsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "blob-storage@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-28"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-add-home-course-input-section-to-the-sign-up-form-where-users-can-specify-their-primary-golf-course",
-      "featureTitle": "Add home course input section to the sign-up form where users can specify their primary golf course",
-      "files": [
-        "frontend/src/pages/SignUpPage.tsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "blob-storage@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-29"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-add-profile-photo-upload-option-to-the-sign-up-form-allowing-users-to-upload-an-image-file",
-      "featureTitle": "Add profile photo upload option to the sign-up form allowing users to upload an image file",
-      "files": [
-        "frontend/src/pages/SignUpPage.tsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "blob-storage@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-30"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-apply-golf-themed-styling-to-the-sign-up-page-consistent-with-the-existing-visual-design-system-using-golf-inspired-colors-typography-and-layout-patterns",
-      "featureTitle": "Apply golf-themed styling to the sign-up page consistent with the existing visual design system using golf-inspired colors, typography, and layout patterns",
-      "files": [
-        "frontend/src/pages/SignUpPage.tsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "blob-storage@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-31"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-wire-sign-up-form-submission-to-backend-profile-creation-with-validation-and-error-handling",
-      "featureTitle": "Wire sign-up form submission to backend profile creation with validation and error handling",
-      "files": [
-        "frontend/src/pages/SignUpPage.tsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "blob-storage@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-37"
+        "REQ-52"
       ],
       "confidence": "high"
     }

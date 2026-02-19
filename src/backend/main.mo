@@ -1,5 +1,6 @@
 import List "mo:core/List";
 import Map "mo:core/Map";
+import Set "mo:core/Set";
 import Array "mo:core/Array";
 import Text "mo:core/Text";
 import Order "mo:core/Order";
@@ -8,12 +9,13 @@ import Principal "mo:core/Principal";
 import Float "mo:core/Float";
 import Blob "mo:core/Blob";
 import Runtime "mo:core/Runtime";
+import Iter "mo:core/Iter";
+
 import MixinAuthorization "authorization/MixinAuthorization";
 import AccessControl "authorization/access-control";
 import MixinStorage "blob-storage/Mixin";
-import Migration "migration";
 
-(with migration = Migration.run)
+
 actor {
   type Gender = {
     #male;
@@ -53,6 +55,16 @@ actor {
     isLocal : Bool;
   };
 
+  type Course = {
+    details : Promise;
+    members : Set.Set<Principal>;
+  };
+
+  type CourseWithProfiles = {
+    details : Promise;
+    memberProfiles : [UserProfile];
+  };
+
   type Event = {
     creator : Principal;
     timestamp : Time.Time;
@@ -74,7 +86,7 @@ actor {
   };
 
   let userProfiles = Map.empty<Principal, UserProfile>();
-  let courseDirectory = Map.empty<Text, Promise>();
+  let courseDirectory = Map.empty<Text, Course>();
   let events = Map.empty<Nat, EventWithRSVPs>();
   let messages = List.empty<(Principal, Message)>();
   let sponsors = List.empty<Text>();
@@ -84,7 +96,7 @@ actor {
   include MixinStorage();
 
   public query ({ caller }) func getCourseDirectory() : async [(Text, Promise)] {
-    courseDirectory.toArray();
+    courseDirectory.toArray().map(func((name, course)) { (name, course.details) });
   };
 
   public query ({ caller }) func getSponsors() : async [Text] {
@@ -114,6 +126,26 @@ actor {
       Runtime.trap("Unauthorized: Only users can save profiles");
     };
     userProfiles.add(caller, profile);
+
+    let courseName = profile.homeCourse.trim(#char ' ');
+    if (courseName.size() > 0) {
+      let newCourseDetails = {
+        name = courseName;
+        website = "";
+        isLocal = false;
+      };
+      let existingCourse = courseDirectory.get(courseName);
+      let members = switch (existingCourse) {
+        case (?course) { course.members };
+        case (null) { Set.empty<Principal>() };
+      };
+      members.add(caller);
+      let newCourse : Course = {
+        details = newCourseDetails;
+        members;
+      };
+      courseDirectory.add(courseName, newCourse);
+    };
   };
 
   public query ({ caller }) func getUserProfile(user : Principal) : async ?UserProfile {
@@ -174,7 +206,6 @@ actor {
     messages.forEach(
       func((_, msg)) {
         if (msg.recipient == caller and msg.sender == withUser and msg.timestamp == timestamp and not msg.read) {
-          // TODO: Mark as read in persistent store
         };
       }
     );
@@ -247,6 +278,47 @@ actor {
       Runtime.trap("Unauthorized: Only admins can add courses");
     };
     let details : Promise = { name; website; isLocal };
-    courseDirectory.add(name, details);
+    let members = Set.empty<Principal>();
+    let newCourse : Course = {
+      details;
+      members;
+    };
+    courseDirectory.add(name, newCourse);
+  };
+
+  public query ({ caller }) func getCourseWithMembers(courseName : Text) : async ?CourseWithProfiles {
+    if (not AccessControl.hasPermission(accessControlState, caller, #user)) {
+      Runtime.trap("Unauthorized: Only authenticated users can view course members");
+    };
+    switch (courseDirectory.get(courseName)) {
+      case (?course) {
+        let memberProfiles = course.members.values().toArray().map(
+          func(p) {
+            userProfiles.get(p);
+          }
+        ).filter(
+          func(optProfile) {
+            switch (optProfile) {
+              case (?_profile) { true };
+              case (null) { false };
+            };
+          }
+        ).map(
+          func(validOptProfile) {
+            switch (validOptProfile) {
+              case (?profile) { profile };
+              case (null) {
+                Runtime.trap("Unexpected null profile in memberProfiles filtering");
+              };
+            };
+          }
+        );
+        ?{
+          details = course.details;
+          memberProfiles;
+        };
+      };
+      case (null) { null };
+    };
   };
 };

@@ -13,9 +13,11 @@ export default function LandingPage() {
     navigate({ to: '/sign-up' });
   };
 
-  const handleAuth = async () => {
+  const handleSignIn = async () => {
     try {
       await login();
+      // Navigate to map after successful login
+      navigate({ to: '/map' });
     } catch (error: any) {
       console.error('Login error:', error);
       if (error.message === 'User is already authenticated') {
@@ -69,11 +71,11 @@ export default function LandingPage() {
             <Button
               size="lg"
               variant="outline"
-              onClick={handleAuth}
+              onClick={handleSignIn}
               disabled={isLoggingIn}
               className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-courseGreen text-lg px-8 py-6 rounded-full shadow-xl transition-all"
             >
-              {isLoggingIn ? 'Connecting...' : 'Sign In'}
+              {isLoggingIn ? 'Signing in...' : 'Sign In'}
             </Button>
           </div>
 

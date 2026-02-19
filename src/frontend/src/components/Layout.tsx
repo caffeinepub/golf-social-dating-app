@@ -3,6 +3,7 @@ import { useInternetIdentity } from '../hooks/useInternetIdentity';
 import { useQueryClient } from '@tanstack/react-query';
 import { Button } from '@/components/ui/button';
 import { Map, Calendar, MessageCircle, Building2, Trophy, LogOut } from 'lucide-react';
+import DropdownNavigation from './DropdownNavigation';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const { clear } = useInternetIdentity();
@@ -23,14 +24,17 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <div className="min-h-screen bg-gradient-to-br from-fairwayGreen/5 via-white to-grassGreen/5">
       <header className="bg-white/80 backdrop-blur-md border-b border-courseGreen/20 sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <Link to="/map" className="flex items-center gap-3 group">
-              <img 
-                src="/assets/generated/lime-greens-logo.dim_400x200.png" 
-                alt="Lime Greens" 
-                className="h-10 w-auto group-hover:scale-105 transition-transform" 
-              />
-            </Link>
+          <div className="flex items-center justify-between gap-4">
+            <div className="flex items-center gap-4">
+              <DropdownNavigation />
+              <Link to="/map" className="flex items-center gap-3 group">
+                <img 
+                  src="/assets/generated/lime-greens-logo.dim_400x200.png" 
+                  alt="Lime Greens" 
+                  className="h-10 w-auto group-hover:scale-105 transition-transform" 
+                />
+              </Link>
+            </div>
 
             <nav className="hidden md:flex items-center gap-2">
               <Link to="/map">

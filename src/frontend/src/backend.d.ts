@@ -12,6 +12,10 @@ export interface Promise_ {
     name: string;
     website: string;
 }
+export interface CourseWithProfiles {
+    memberProfiles: Array<UserProfile>;
+    details: Promise_;
+}
 export type Time = bigint;
 export interface Coordinates {
     lat: number;
@@ -68,6 +72,7 @@ export interface backendInterface {
     getCallerUserProfile(): Promise<UserProfile | null>;
     getCallerUserRole(): Promise<UserRole>;
     getCourseDirectory(): Promise<Array<[string, Promise_]>>;
+    getCourseWithMembers(courseName: string): Promise<CourseWithProfiles | null>;
     getMessages(withUser: Principal): Promise<Array<Message>>;
     getSponsors(): Promise<Array<string>>;
     getUserProfile(user: Principal): Promise<UserProfile | null>;

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 11,
+  "projectStateVersion": 19,
   "summary": "Golf social dating app connecting single golfers through online profiles with handicap and social preferences (business, pleasure, casual, romantic). Features gender-based and couples searching, location-based map showing singles by proximity to golf courses, course booking integration, course directory, sponsors page, and event hosting.",
   "architectural_notes": [
     "Social dating platform focused on golf community",
@@ -9,7 +9,10 @@
     "User authentication and profile management system",
     "Real-time chat functionality needed",
     "Sign-up page required with comprehensive profile data collection",
-    "Profile photo upload and storage functionality needed"
+    "Profile photo upload and storage functionality needed",
+    "Course directory dynamically built from user-submitted home courses",
+    "Member profiles linked to courses for discovery and networking",
+    "Public course data (website, booking info) stored and displayed"
   ],
   "known_issues": [
     "Post-login pages lack content and functional navigation"
@@ -255,6 +258,102 @@
         "REQ-37"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-update-coursedirectory-page-to-display-a-list-of-members-for-each-course-showing-member-avatars-names-and-basic-public-information",
+      "title": "Update CourseDirectory page to display a list of members for each course, showing member avatars, names, and basic public information",
+      "reqIds": [
+        "REQ-41"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-make-member-entries-in-the-coursedirectory-clickable-navigating-to-a-dedicated-profile-detail-view-page-when-a-member-is-clicked",
+      "title": "Make member entries in the CourseDirectory clickable, navigating to a dedicated profile detail view page when a member is clicked",
+      "reqIds": [
+        "REQ-42"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-display-all-public-course-information-on-the-coursedirectory-page-including-course-website-urls-and-booking-links-for-each-course",
+      "title": "Display all public course information on the CourseDirectory page including course website URLs and booking links for each course",
+      "reqIds": [
+        "REQ-43"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-new-profile-detail-page-component-that-displays-a-user-s-complete-public-profile-including-age-handicap-gender-preferences-bio-location-home-course-and-profile-photo",
+      "title": "Create a new profile detail page component that displays a user's complete public profile including age, handicap, gender, preferences, bio, location, home course, and profile photo",
+      "reqIds": [
+        "REQ-44"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-dropdown-navigation-menu-in-the-left-hand-corner-of-the-header-that-displays-links-to-all-authenticated-pages-map-view-course-directory-course-booking-events-chat-sponsors-profile",
+      "title": "Add a dropdown navigation menu in the left-hand corner of the header that displays links to all authenticated pages (Map View, Course Directory, Course Booking, Events, Chat, Sponsors, Profile)",
+      "reqIds": [
+        "REQ-45"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-layout-component-to-integrate-the-dropdown-navigation-menu-alongside-the-existing-header-navigation-ensuring-both-navigation-patterns-coexist-without-visual-conflicts",
+      "title": "Update the Layout component to integrate the dropdown navigation menu alongside the existing header navigation, ensuring both navigation patterns coexist without visual conflicts",
+      "reqIds": [
+        "REQ-46"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-get-started-button-on-the-landingpage-to-navigate-to-the-signuppage-route-sign-up-when-clicked",
+      "title": "Update the Get Started button on the LandingPage to navigate to the SignUpPage route (/sign-up) when clicked",
+      "reqIds": [
+        "REQ-47"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-sign-in-button-on-the-landingpage-to-trigger-internet-identity-authentication-flow-and-navigate-authenticated-users-to-the-mapview-page",
+      "title": "Update the Sign In button on the LandingPage to trigger Internet Identity authentication flow and navigate authenticated users to the MapView page",
+      "reqIds": [
+        "REQ-48"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-message-button-to-each-member-profile-card-in-the-coursedirectory-page-that-initiates-a-new-conversation-with-that-member",
+      "title": "Add a 'Message' button to each member profile card in the CourseDirectory page that initiates a new conversation with that member",
+      "reqIds": [
+        "REQ-49"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-message-button-to-the-profiledetailpage-that-allows-users-to-initiate-a-conversation-with-the-profile-owner",
+      "title": "Add a 'Message' button to the ProfileDetailPage that allows users to initiate a conversation with the profile owner",
+      "reqIds": [
+        "REQ-50"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-message-button-to-each-match-profile-card-in-the-mapview-page-that-initiates-a-conversation-with-the-matched-user",
+      "title": "Add a 'Message' button to each match profile card in the MapView page that initiates a conversation with the matched user",
+      "reqIds": [
+        "REQ-51"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-chatpage-to-automatically-open-or-create-a-conversation-when-navigated-to-with-a-specific-user-principal-id-passed-via-route-parameters-or-state",
+      "title": "Update ChatPage to automatically open or create a conversation when navigated to with a specific user Principal ID passed via route parameters or state",
+      "reqIds": [
+        "REQ-52"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -384,6 +483,66 @@
       "reqIds": [
         "REQ-36"
       ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-30",
+      "summary": "Create dynamic course directory that auto-populates from user profiles and displays members by course with clickable profile access",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-31",
+      "summary": "Display public course information (website, booking links, etc.) on the course directory page",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-32",
+      "summary": "Add functionality to view individual member profiles by clicking on them from course member lists",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-33",
+      "summary": "Update backend Course type to include a members field that stores an array of Principal IDs representing users who have listed this course as their home course",
+      "reqIds": [
+        "REQ-38"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-34",
+      "summary": "Implement backend logic to automatically create or update course entries when a user specifies a home course during profile creation or update, adding the user's Principal to that course's members list",
+      "reqIds": [
+        "REQ-39"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-35",
+      "summary": "Create backend query function to retrieve course details including all member profiles for a specific course, returning public profile information for each member",
+      "reqIds": [
+        "REQ-40"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-36",
+      "summary": "Add a dropdown navigation menu in the left-hand corner that links to all pages/sites on the webpage",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-37",
+      "summary": "Make landing page buttons active links that navigate to the respective pages",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-38",
+      "summary": "Add user messaging functionality so course members can connect with each other",
+      "reqIds": [],
       "status": "pending"
     }
   ],

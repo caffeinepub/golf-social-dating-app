@@ -11,6 +11,10 @@ import type { IDL } from '@icp-sdk/core/candid';
 import type { Principal } from '@icp-sdk/core/principal';
 
 export interface Coordinates { 'lat' : number, 'long' : number }
+export interface CourseWithProfiles {
+  'memberProfiles' : Array<UserProfile>,
+  'details' : Promise,
+}
 export interface Event {
   'creator' : Principal,
   'description' : string,
@@ -89,6 +93,7 @@ export interface _SERVICE {
   'getCallerUserProfile' : ActorMethod<[], [] | [UserProfile]>,
   'getCallerUserRole' : ActorMethod<[], UserRole>,
   'getCourseDirectory' : ActorMethod<[], Array<[string, Promise]>>,
+  'getCourseWithMembers' : ActorMethod<[string], [] | [CourseWithProfiles]>,
   'getMessages' : ActorMethod<[Principal], Array<Message>>,
   'getSponsors' : ActorMethod<[], Array<string>>,
   'getUserProfile' : ActorMethod<[Principal], [] | [UserProfile]>,

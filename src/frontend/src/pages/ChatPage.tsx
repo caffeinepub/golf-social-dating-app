@@ -21,8 +21,42 @@ export default function ChatPage() {
   const sendMessage = useSendMessage();
   const [messageText, setMessageText] = useState('');
   const scrollRef = useRef<HTMLDivElement>(null);
+  const messageInputRef = useRef<HTMLTextAreaElement>(null);
 
   const currentPrincipal = identity?.getPrincipal().toString();
+
+  // Handle sessionStorage for pre-selecting a conversation
+  useEffect(() => {
+    const targetPrincipalStr = sessionStorage.getItem('chatTargetPrincipal');
+    if (targetPrincipalStr && matches) {
+      try {
+        const targetPrincipal = Principal.fromText(targetPrincipalStr);
+        setSelectedPrincipal(targetPrincipal);
+        
+        // Try to find matching user in matches list
+        const matchIndex = matches.findIndex(profile => {
+          // Note: We can't actually match because profiles don't include Principal
+          // This is a backend limitation
+          return false;
+        });
+        
+        if (matchIndex >= 0) {
+          setSelectedUserIndex(matchIndex);
+        }
+        
+        // Focus the message input
+        setTimeout(() => {
+          messageInputRef.current?.focus();
+        }, 100);
+        
+        // Clear the sessionStorage after using it
+        sessionStorage.removeItem('chatTargetPrincipal');
+      } catch (e) {
+        console.error('Invalid target principal:', e);
+        sessionStorage.removeItem('chatTargetPrincipal');
+      }
+    }
+  }, [matches]);
 
   // Convert avatar bytes to blob URLs
   const avatarUrls = useMemo(() => {
@@ -96,6 +130,11 @@ export default function ChatPage() {
     // In a real app, we'd have actual principals for each match
     // For now, using a placeholder principal
     setSelectedPrincipal(Principal.fromText('aaaaa-aa'));
+    
+    // Focus the message input
+    setTimeout(() => {
+      messageInputRef.current?.focus();
+    }, 100);
   };
 
   return (
@@ -225,6 +264,7 @@ export default function ChatPage() {
                 <div className="border-t p-4">
                   <form onSubmit={handleSendMessage} className="flex gap-2">
                     <Textarea
+                      ref={messageInputRef}
                       value={messageText}
                       onChange={(e) => setMessageText(e.target.value)}
                       onKeyPress={handleKeyPress}
@@ -235,7 +275,7 @@ export default function ChatPage() {
                     <Button 
                       type="submit" 
                       size="icon" 
-                      className="h-[60px] w-[60px]"
+                      className="h-[60px] w-[60px] bg-courseGreen hover:bg-courseGreen/90"
                       disabled={!messageText.trim() || sendMessage.isPending}
                     >
                       <Send className="w-5 h-5" />

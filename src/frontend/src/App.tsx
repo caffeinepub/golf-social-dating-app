@@ -9,6 +9,7 @@ import CourseDirectory from './pages/CourseDirectory';
 import SponsorsPage from './pages/SponsorsPage';
 import EventsPage from './pages/EventsPage';
 import ChatPage from './pages/ChatPage';
+import ProfileDetailPage from './pages/ProfileDetailPage';
 import Layout from './components/Layout';
 import ProfileSetup from './components/ProfileSetup';
 import { Toaster } from '@/components/ui/sonner';
@@ -104,6 +105,12 @@ const courseDirectoryRoute = createRoute({
   component: CourseDirectory,
 });
 
+const profileDetailRoute = createRoute({
+  getParentRoute: () => protectedRoute,
+  path: '/profile/$userId',
+  component: ProfileDetailPage,
+});
+
 const sponsorsRoute = createRoute({
   getParentRoute: () => protectedRoute,
   path: '/sponsors',
@@ -129,6 +136,7 @@ const routeTree = rootRoute.addChildren([
     mapRoute,
     courseBookingRoute,
     courseDirectoryRoute,
+    profileDetailRoute,
     sponsorsRoute,
     eventsRoute,
     chatRoute,
