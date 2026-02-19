@@ -10,11 +10,13 @@ import { toast } from 'sonner';
 import { Gender, Preference } from '../backend';
 
 export default function ProfileSetup() {
+  const [age, setAge] = useState('25');
   const [handicap, setHandicap] = useState('18');
   const [gender, setGender] = useState<Gender>(Gender.male);
   const [lookingFor, setLookingFor] = useState<Gender>(Gender.female);
   const [preference, setPreference] = useState<Preference>(Preference.casual);
   const [bio, setBio] = useState('');
+  const [homeCourse, setHomeCourse] = useState('');
   const [lat, setLat] = useState('40.7128');
   const [long, setLong] = useState('-74.0060');
 
@@ -25,17 +27,20 @@ export default function ProfileSetup() {
 
     try {
       await saveProfile.mutateAsync({
+        age: BigInt(parseInt(age)),
         handicap: BigInt(parseInt(handicap)),
         gender,
         genderPreference: lookingFor,
         lookingFor,
         preference,
         bio,
+        homeCourse,
         location: {
           lat: parseFloat(lat),
           long: parseFloat(long),
         },
         avatar: undefined,
+        profilePhoto: undefined,
       });
       toast.success('Profile created successfully!');
     } catch (error) {
@@ -54,6 +59,19 @@ export default function ProfileSetup() {
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="age">Age</Label>
+                <Input
+                  id="age"
+                  type="number"
+                  min="18"
+                  max="100"
+                  value={age}
+                  onChange={(e) => setAge(e.target.value)}
+                  required
+                />
+              </div>
+
               <div className="space-y-2">
                 <Label htmlFor="handicap">Handicap</Label>
                 <Input
@@ -106,6 +124,18 @@ export default function ProfileSetup() {
                     <SelectItem value={Preference.romantic}>Romantic</SelectItem>
                   </SelectContent>
                 </Select>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="homeCourse">Home Course</Label>
+                <Input
+                  id="homeCourse"
+                  type="text"
+                  value={homeCourse}
+                  onChange={(e) => setHomeCourse(e.target.value)}
+                  placeholder="e.g., Pebble Beach"
+                  required
+                />
               </div>
 
               <div className="space-y-2">

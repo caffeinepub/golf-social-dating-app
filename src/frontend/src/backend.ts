@@ -102,6 +102,12 @@ export interface Coordinates {
 export interface _CaffeineStorageRefillInformation {
     proposed_top_up_amount?: bigint;
 }
+export interface Event {
+    creator: Principal;
+    description: string;
+    timestamp: Time;
+    courseName: string;
+}
 export interface Message {
     content: string;
     read: boolean;
@@ -109,25 +115,22 @@ export interface Message {
     sender: Principal;
     timestamp: Time;
 }
-export interface Event {
-    creator: Principal;
-    description: string;
-    timestamp: Time;
-    courseName: string;
-}
 export interface _CaffeineStorageCreateCertificateResult {
     method: string;
     blob_hash: string;
 }
 export interface UserProfile {
+    age: bigint;
     bio: string;
+    profilePhoto?: Uint8Array;
+    homeCourse: string;
     lookingFor: Gender;
     preference: Preference;
     genderPreference: Gender;
     gender: Gender;
     handicap: bigint;
     location: Coordinates;
-    avatar?: ExternalBlob;
+    avatar?: Uint8Array;
 }
 export interface _CaffeineStorageRefillResult {
     success?: boolean;
@@ -174,9 +177,8 @@ export interface backendInterface {
     saveCallerUserProfile(profile: UserProfile): Promise<void>;
     searchMatches(): Promise<Array<UserProfile>>;
     sendMessage(recipient: Principal, content: string): Promise<void>;
-    updateProfile(profile: UserProfile): Promise<void>;
 }
-import type { Coordinates as _Coordinates, ExternalBlob as _ExternalBlob, Gender as _Gender, Preference as _Preference, UserProfile as _UserProfile, UserRole as _UserRole, _CaffeineStorageRefillInformation as __CaffeineStorageRefillInformation, _CaffeineStorageRefillResult as __CaffeineStorageRefillResult } from "./declarations/backend.did.d.ts";
+import type { Coordinates as _Coordinates, Gender as _Gender, Preference as _Preference, UserProfile as _UserProfile, UserRole as _UserRole, _CaffeineStorageRefillInformation as __CaffeineStorageRefillInformation, _CaffeineStorageRefillResult as __CaffeineStorageRefillResult } from "./declarations/backend.did.d.ts";
 export class Backend implements backendInterface {
     constructor(private actor: ActorSubclass<_SERVICE>, private _uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, private _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, private processError?: (error: unknown) => never){}
     async _caffeineStorageBlobIsLive(arg0: Uint8Array): Promise<boolean> {
@@ -365,14 +367,14 @@ export class Backend implements backendInterface {
         if (this.processError) {
             try {
                 const result = await this.actor.getCallerUserRole();
-                return from_candid_UserRole_n19(this._uploadFile, this._downloadFile, result);
+                return from_candid_UserRole_n18(this._uploadFile, this._downloadFile, result);
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
             const result = await this.actor.getCallerUserRole();
-            return from_candid_UserRole_n19(this._uploadFile, this._downloadFile, result);
+            return from_candid_UserRole_n18(this._uploadFile, this._downloadFile, result);
         }
     }
     async getCourseDirectory(): Promise<Array<[string, Promise_]>> {
@@ -476,14 +478,14 @@ export class Backend implements backendInterface {
     async saveCallerUserProfile(arg0: UserProfile): Promise<void> {
         if (this.processError) {
             try {
-                const result = await this.actor.saveCallerUserProfile(await to_candid_UserProfile_n21(this._uploadFile, this._downloadFile, arg0));
+                const result = await this.actor.saveCallerUserProfile(to_candid_UserProfile_n20(this._uploadFile, this._downloadFile, arg0));
                 return result;
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
-            const result = await this.actor.saveCallerUserProfile(await to_candid_UserProfile_n21(this._uploadFile, this._downloadFile, arg0));
+            const result = await this.actor.saveCallerUserProfile(to_candid_UserProfile_n20(this._uploadFile, this._downloadFile, arg0));
             return result;
         }
     }
@@ -491,14 +493,14 @@ export class Backend implements backendInterface {
         if (this.processError) {
             try {
                 const result = await this.actor.searchMatches();
-                return from_candid_vec_n28(this._uploadFile, this._downloadFile, result);
+                return from_candid_vec_n26(this._uploadFile, this._downloadFile, result);
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
             const result = await this.actor.searchMatches();
-            return from_candid_vec_n28(this._uploadFile, this._downloadFile, result);
+            return from_candid_vec_n26(this._uploadFile, this._downloadFile, result);
         }
     }
     async sendMessage(arg0: Principal, arg1: string): Promise<void> {
@@ -515,44 +517,27 @@ export class Backend implements backendInterface {
             return result;
         }
     }
-    async updateProfile(arg0: UserProfile): Promise<void> {
-        if (this.processError) {
-            try {
-                const result = await this.actor.updateProfile(await to_candid_UserProfile_n21(this._uploadFile, this._downloadFile, arg0));
-                return result;
-            } catch (e) {
-                this.processError(e);
-                throw new Error("unreachable");
-            }
-        } else {
-            const result = await this.actor.updateProfile(await to_candid_UserProfile_n21(this._uploadFile, this._downloadFile, arg0));
-            return result;
-        }
-    }
 }
-async function from_candid_ExternalBlob_n18(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _ExternalBlob): Promise<ExternalBlob> {
-    return await _downloadFile(value);
+function from_candid_Gender_n14(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _Gender): Gender {
+    return from_candid_variant_n15(_uploadFile, _downloadFile, value);
 }
-function from_candid_Gender_n13(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _Gender): Gender {
-    return from_candid_variant_n14(_uploadFile, _downloadFile, value);
+function from_candid_Preference_n16(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _Preference): Preference {
+    return from_candid_variant_n17(_uploadFile, _downloadFile, value);
 }
-function from_candid_Preference_n15(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _Preference): Preference {
-    return from_candid_variant_n16(_uploadFile, _downloadFile, value);
+function from_candid_UserProfile_n11(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _UserProfile): UserProfile {
+    return from_candid_record_n12(_uploadFile, _downloadFile, value);
 }
-async function from_candid_UserProfile_n11(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _UserProfile): Promise<UserProfile> {
-    return await from_candid_record_n12(_uploadFile, _downloadFile, value);
-}
-function from_candid_UserRole_n19(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _UserRole): UserRole {
-    return from_candid_variant_n20(_uploadFile, _downloadFile, value);
+function from_candid_UserRole_n18(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _UserRole): UserRole {
+    return from_candid_variant_n19(_uploadFile, _downloadFile, value);
 }
 function from_candid__CaffeineStorageRefillResult_n4(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: __CaffeineStorageRefillResult): _CaffeineStorageRefillResult {
     return from_candid_record_n5(_uploadFile, _downloadFile, value);
 }
-async function from_candid_opt_n10(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [_UserProfile]): Promise<UserProfile | null> {
-    return value.length === 0 ? null : await from_candid_UserProfile_n11(_uploadFile, _downloadFile, value[0]);
+function from_candid_opt_n10(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [_UserProfile]): UserProfile | null {
+    return value.length === 0 ? null : from_candid_UserProfile_n11(_uploadFile, _downloadFile, value[0]);
 }
-async function from_candid_opt_n17(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [_ExternalBlob]): Promise<ExternalBlob | null> {
-    return value.length === 0 ? null : await from_candid_ExternalBlob_n18(_uploadFile, _downloadFile, value[0]);
+function from_candid_opt_n13(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [Uint8Array]): Uint8Array | null {
+    return value.length === 0 ? null : value[0];
 }
 function from_candid_opt_n6(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [boolean]): boolean | null {
     return value.length === 0 ? null : value[0];
@@ -560,34 +545,43 @@ function from_candid_opt_n6(_uploadFile: (file: ExternalBlob) => Promise<Uint8Ar
 function from_candid_opt_n7(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [bigint]): bigint | null {
     return value.length === 0 ? null : value[0];
 }
-async function from_candid_record_n12(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
+function from_candid_record_n12(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
+    age: bigint;
     bio: string;
+    profilePhoto: [] | [Uint8Array];
+    homeCourse: string;
     lookingFor: _Gender;
     preference: _Preference;
     genderPreference: _Gender;
     gender: _Gender;
     handicap: bigint;
     location: _Coordinates;
-    avatar: [] | [_ExternalBlob];
-}): Promise<{
+    avatar: [] | [Uint8Array];
+}): {
+    age: bigint;
     bio: string;
+    profilePhoto?: Uint8Array;
+    homeCourse: string;
     lookingFor: Gender;
     preference: Preference;
     genderPreference: Gender;
     gender: Gender;
     handicap: bigint;
     location: Coordinates;
-    avatar?: ExternalBlob;
-}> {
+    avatar?: Uint8Array;
+} {
     return {
+        age: value.age,
         bio: value.bio,
-        lookingFor: from_candid_Gender_n13(_uploadFile, _downloadFile, value.lookingFor),
-        preference: from_candid_Preference_n15(_uploadFile, _downloadFile, value.preference),
-        genderPreference: from_candid_Gender_n13(_uploadFile, _downloadFile, value.genderPreference),
-        gender: from_candid_Gender_n13(_uploadFile, _downloadFile, value.gender),
+        profilePhoto: record_opt_to_undefined(from_candid_opt_n13(_uploadFile, _downloadFile, value.profilePhoto)),
+        homeCourse: value.homeCourse,
+        lookingFor: from_candid_Gender_n14(_uploadFile, _downloadFile, value.lookingFor),
+        preference: from_candid_Preference_n16(_uploadFile, _downloadFile, value.preference),
+        genderPreference: from_candid_Gender_n14(_uploadFile, _downloadFile, value.genderPreference),
+        gender: from_candid_Gender_n14(_uploadFile, _downloadFile, value.gender),
         handicap: value.handicap,
         location: value.location,
-        avatar: record_opt_to_undefined(await from_candid_opt_n17(_uploadFile, _downloadFile, value.avatar))
+        avatar: record_opt_to_undefined(from_candid_opt_n13(_uploadFile, _downloadFile, value.avatar))
     };
 }
 function from_candid_record_n5(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
@@ -602,7 +596,7 @@ function from_candid_record_n5(_uploadFile: (file: ExternalBlob) => Promise<Uint
         topped_up_amount: record_opt_to_undefined(from_candid_opt_n7(_uploadFile, _downloadFile, value.topped_up_amount))
     };
 }
-function from_candid_variant_n14(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
+function from_candid_variant_n15(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
     female: null;
 } | {
     male: null;
@@ -611,7 +605,7 @@ function from_candid_variant_n14(_uploadFile: (file: ExternalBlob) => Promise<Ui
 }): Gender {
     return "female" in value ? Gender.female : "male" in value ? Gender.male : "couple" in value ? Gender.couple : value;
 }
-function from_candid_variant_n16(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
+function from_candid_variant_n17(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
     pleasure: null;
 } | {
     romantic: null;
@@ -622,7 +616,7 @@ function from_candid_variant_n16(_uploadFile: (file: ExternalBlob) => Promise<Ui
 }): Preference {
     return "pleasure" in value ? Preference.pleasure : "romantic" in value ? Preference.romantic : "business" in value ? Preference.business : "casual" in value ? Preference.casual : value;
 }
-function from_candid_variant_n20(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
+function from_candid_variant_n19(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
     admin: null;
 } | {
     user: null;
@@ -631,20 +625,17 @@ function from_candid_variant_n20(_uploadFile: (file: ExternalBlob) => Promise<Ui
 }): UserRole {
     return "admin" in value ? UserRole.admin : "user" in value ? UserRole.user : "guest" in value ? UserRole.guest : value;
 }
-async function from_candid_vec_n28(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: Array<_UserProfile>): Promise<Array<UserProfile>> {
-    return await Promise.all(value.map(async (x)=>await from_candid_UserProfile_n11(_uploadFile, _downloadFile, x)));
+function from_candid_vec_n26(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: Array<_UserProfile>): Array<UserProfile> {
+    return value.map((x)=>from_candid_UserProfile_n11(_uploadFile, _downloadFile, x));
 }
-async function to_candid_ExternalBlob_n27(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: ExternalBlob): Promise<_ExternalBlob> {
-    return await _uploadFile(value);
+function to_candid_Gender_n22(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: Gender): _Gender {
+    return to_candid_variant_n23(_uploadFile, _downloadFile, value);
 }
-function to_candid_Gender_n23(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: Gender): _Gender {
-    return to_candid_variant_n24(_uploadFile, _downloadFile, value);
+function to_candid_Preference_n24(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: Preference): _Preference {
+    return to_candid_variant_n25(_uploadFile, _downloadFile, value);
 }
-function to_candid_Preference_n25(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: Preference): _Preference {
-    return to_candid_variant_n26(_uploadFile, _downloadFile, value);
-}
-async function to_candid_UserProfile_n21(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: UserProfile): Promise<_UserProfile> {
-    return await to_candid_record_n22(_uploadFile, _downloadFile, value);
+function to_candid_UserProfile_n20(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: UserProfile): _UserProfile {
+    return to_candid_record_n21(_uploadFile, _downloadFile, value);
 }
 function to_candid_UserRole_n8(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: UserRole): _UserRole {
     return to_candid_variant_n9(_uploadFile, _downloadFile, value);
@@ -655,34 +646,43 @@ function to_candid__CaffeineStorageRefillInformation_n2(_uploadFile: (file: Exte
 function to_candid_opt_n1(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _CaffeineStorageRefillInformation | null): [] | [__CaffeineStorageRefillInformation] {
     return value === null ? candid_none() : candid_some(to_candid__CaffeineStorageRefillInformation_n2(_uploadFile, _downloadFile, value));
 }
-async function to_candid_record_n22(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
+function to_candid_record_n21(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
+    age: bigint;
     bio: string;
+    profilePhoto?: Uint8Array;
+    homeCourse: string;
     lookingFor: Gender;
     preference: Preference;
     genderPreference: Gender;
     gender: Gender;
     handicap: bigint;
     location: Coordinates;
-    avatar?: ExternalBlob;
-}): Promise<{
+    avatar?: Uint8Array;
+}): {
+    age: bigint;
     bio: string;
+    profilePhoto: [] | [Uint8Array];
+    homeCourse: string;
     lookingFor: _Gender;
     preference: _Preference;
     genderPreference: _Gender;
     gender: _Gender;
     handicap: bigint;
     location: _Coordinates;
-    avatar: [] | [_ExternalBlob];
-}> {
+    avatar: [] | [Uint8Array];
+} {
     return {
+        age: value.age,
         bio: value.bio,
-        lookingFor: to_candid_Gender_n23(_uploadFile, _downloadFile, value.lookingFor),
-        preference: to_candid_Preference_n25(_uploadFile, _downloadFile, value.preference),
-        genderPreference: to_candid_Gender_n23(_uploadFile, _downloadFile, value.genderPreference),
-        gender: to_candid_Gender_n23(_uploadFile, _downloadFile, value.gender),
+        profilePhoto: value.profilePhoto ? candid_some(value.profilePhoto) : candid_none(),
+        homeCourse: value.homeCourse,
+        lookingFor: to_candid_Gender_n22(_uploadFile, _downloadFile, value.lookingFor),
+        preference: to_candid_Preference_n24(_uploadFile, _downloadFile, value.preference),
+        genderPreference: to_candid_Gender_n22(_uploadFile, _downloadFile, value.genderPreference),
+        gender: to_candid_Gender_n22(_uploadFile, _downloadFile, value.gender),
         handicap: value.handicap,
         location: value.location,
-        avatar: value.avatar ? candid_some(await to_candid_ExternalBlob_n27(_uploadFile, _downloadFile, value.avatar)) : candid_none()
+        avatar: value.avatar ? candid_some(value.avatar) : candid_none()
     };
 }
 function to_candid_record_n3(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
@@ -694,7 +694,7 @@ function to_candid_record_n3(_uploadFile: (file: ExternalBlob) => Promise<Uint8A
         proposed_top_up_amount: value.proposed_top_up_amount ? candid_some(value.proposed_top_up_amount) : candid_none()
     };
 }
-function to_candid_variant_n24(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: Gender): {
+function to_candid_variant_n23(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: Gender): {
     female: null;
 } | {
     male: null;
@@ -709,7 +709,7 @@ function to_candid_variant_n24(_uploadFile: (file: ExternalBlob) => Promise<Uint
         couple: null
     } : value;
 }
-function to_candid_variant_n26(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: Preference): {
+function to_candid_variant_n25(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: Preference): {
     pleasure: null;
 } | {
     romantic: null;

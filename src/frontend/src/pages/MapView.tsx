@@ -59,6 +59,19 @@ export default function MapView() {
     }));
   }, [matches, currentProfile, handicapRange, maxDistance, preferenceFilter]);
 
+  // Convert avatar bytes to blob URLs
+  const avatarUrls = useMemo(() => {
+    if (!filteredMatches) return {};
+    const urls: Record<number, string> = {};
+    filteredMatches.forEach((item, index) => {
+      if (item.profile.avatar) {
+        const blob = new Blob([new Uint8Array(item.profile.avatar)], { type: 'image/jpeg' });
+        urls[index] = URL.createObjectURL(blob);
+      }
+    });
+    return urls;
+  }, [filteredMatches]);
+
   const getGenderLabel = (gender: Gender) => {
     switch (gender) {
       case Gender.male:
@@ -72,8 +85,8 @@ export default function MapView() {
     }
   };
 
-  const getPreferenceLabel = (pref: Preference) => {
-    switch (pref) {
+  const getPreferenceLabel = (preference: Preference) => {
+    switch (preference) {
       case Preference.business:
         return 'Business';
       case Preference.pleasure:
@@ -83,140 +96,170 @@ export default function MapView() {
       case Preference.romantic:
         return 'Romantic';
       default:
-        return pref;
+        return preference;
     }
   };
-
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-[60vh]">
-        <div className="text-muted-foreground">Loading matches...</div>
-      </div>
-    );
-  }
 
   return (
     <div className="space-y-8">
       <div className="text-center space-y-2">
         <h1 className="text-4xl font-bold bg-gradient-to-r from-fairwayGreen to-courseGreen bg-clip-text text-transparent">
-          Discover Golfers Near You
+          Discover Golfers
         </h1>
-        <p className="text-muted-foreground">Connect with golfers who match your preferences</p>
+        <p className="text-muted-foreground">Find your perfect golf partner nearby</p>
       </div>
 
       {/* Filters */}
       <Card>
         <CardHeader>
-          <CardTitle>Filter Matches</CardTitle>
-          <CardDescription>Refine your search to find the perfect golf partner</CardDescription>
+          <CardTitle>Filters</CardTitle>
+          <CardDescription>Refine your search to find the perfect match</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="space-y-3">
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
               <Label>Handicap Range: {handicapRange[0]} - {handicapRange[1]}</Label>
-              <Slider
-                min={0}
-                max={36}
-                step={1}
-                value={handicapRange}
-                onValueChange={(value) => setHandicapRange(value as [number, number])}
-                className="w-full"
-              />
             </div>
-            
-            <div className="space-y-3">
+            <Slider
+              value={handicapRange}
+              onValueChange={(value) => setHandicapRange(value as [number, number])}
+              min={0}
+              max={54}
+              step={1}
+              className="w-full"
+            />
+          </div>
+
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
               <Label>Max Distance: {maxDistance} miles</Label>
-              <Slider
-                min={5}
-                max={100}
-                step={5}
-                value={[maxDistance]}
-                onValueChange={(value) => setMaxDistance(value[0])}
-                className="w-full"
-              />
             </div>
-            
-            <div className="space-y-3">
-              <Label>Social Preference</Label>
-              <Select value={preferenceFilter} onValueChange={setPreferenceFilter}>
-                <SelectTrigger>
-                  <SelectValue placeholder="All preferences" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Preferences</SelectItem>
-                  <SelectItem value={Preference.business}>Business</SelectItem>
-                  <SelectItem value={Preference.pleasure}>Pleasure</SelectItem>
-                  <SelectItem value={Preference.casual}>Casual</SelectItem>
-                  <SelectItem value={Preference.romantic}>Romantic</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+            <Slider
+              value={[maxDistance]}
+              onValueChange={(value) => setMaxDistance(value[0])}
+              min={5}
+              max={100}
+              step={5}
+              className="w-full"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label>Social Preference</Label>
+            <Select value={preferenceFilter} onValueChange={setPreferenceFilter}>
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Preferences</SelectItem>
+                <SelectItem value={Preference.business}>Business</SelectItem>
+                <SelectItem value={Preference.pleasure}>Pleasure</SelectItem>
+                <SelectItem value={Preference.casual}>Casual</SelectItem>
+                <SelectItem value={Preference.romantic}>Romantic</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
         </CardContent>
       </Card>
 
-      {filteredMatches.length === 0 ? (
-        <Card className="text-center py-12">
-          <CardContent>
-            <MapPin className="w-16 h-16 mx-auto mb-4 text-muted-foreground" />
-            <h3 className="text-xl font-semibold mb-2">No matches found</h3>
-            <p className="text-muted-foreground">Try adjusting your filters or check back later for new golfers in your area</p>
-          </CardContent>
-        </Card>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredMatches.map(({ profile, distance }, index) => (
-            <Card key={index} className="hover:shadow-lg transition-shadow">
-              <CardHeader>
-                <div className="flex items-start justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-16 h-16 rounded-full overflow-hidden bg-gradient-to-br from-fairwayGreen to-courseGreen flex items-center justify-center">
-                      {profile.avatar ? (
-                        <img 
-                          src={profile.avatar.getDirectURL()} 
-                          alt="Profile" 
-                          className="w-full h-full object-cover"
-                        />
-                      ) : (
-                        <img 
-                          src="/assets/generated/avatar-placeholder.dim_128x128.png" 
-                          alt="Avatar" 
-                          className="w-full h-full object-cover"
-                        />
-                      )}
-                    </div>
-                    <div>
-                      <CardTitle className="text-lg">Golfer</CardTitle>
-                      <CardDescription>Handicap: {profile.handicap.toString()}</CardDescription>
-                    </div>
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <p className="text-sm text-muted-foreground line-clamp-3">{profile.bio}</p>
-                <div className="flex flex-wrap gap-2">
-                  <Badge variant="secondary">{getGenderLabel(profile.gender)}</Badge>
-                  <Badge variant="outline">{getPreferenceLabel(profile.preference)}</Badge>
-                </div>
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <MapPin className="w-4 h-4" />
-                  <span>{distance.toFixed(1)} miles away</span>
-                </div>
-                <div className="flex gap-2">
-                  <Button variant="outline" size="sm" className="flex-1 gap-2" onClick={() => navigate({ to: '/chat' })}>
-                    <MessageCircle className="w-4 h-4" />
-                    Message
-                  </Button>
-                  <Button variant="default" size="sm" className="flex-1 gap-2">
-                    <Eye className="w-4 h-4" />
-                    View Profile
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+      {/* Results */}
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <h2 className="text-2xl font-semibold">
+            {filteredMatches.length} {filteredMatches.length === 1 ? 'Match' : 'Matches'} Found
+          </h2>
         </div>
-      )}
+
+        {isLoading ? (
+          <div className="text-center py-12">
+            <p className="text-muted-foreground">Loading matches...</p>
+          </div>
+        ) : filteredMatches.length === 0 ? (
+          <Card>
+            <CardContent className="py-12 text-center">
+              <MapPin className="w-16 h-16 mx-auto mb-4 text-muted-foreground opacity-50" />
+              <p className="text-lg font-medium mb-2">No matches found</p>
+              <p className="text-muted-foreground">Try adjusting your filters to see more golfers</p>
+            </CardContent>
+          </Card>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredMatches.map((item, index) => {
+              const { profile, distance } = item;
+              return (
+                <Card key={index} className="overflow-hidden hover:shadow-lg transition-shadow">
+                  <CardHeader className="pb-4">
+                    <div className="flex items-start gap-4">
+                      <div className="relative">
+                        {avatarUrls[index] ? (
+                          <img
+                            src={avatarUrls[index]}
+                            alt="Profile"
+                            className="w-20 h-20 rounded-full object-cover border-4 border-courseGreen/20"
+                          />
+                        ) : (
+                          <img
+                            src="/assets/generated/avatar-placeholder.dim_128x128.png"
+                            alt="Avatar"
+                            className="w-20 h-20 rounded-full object-cover border-4 border-courseGreen/20"
+                          />
+                        )}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <CardTitle className="text-xl mb-2">Golfer {index + 1}</CardTitle>
+                        <div className="flex flex-wrap gap-2">
+                          <Badge variant="secondary" className="bg-courseGreen/10 text-courseGreen">
+                            Handicap {profile.handicap.toString()}
+                          </Badge>
+                          <Badge variant="outline">{getGenderLabel(profile.gender)}</Badge>
+                        </div>
+                      </div>
+                    </div>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <MapPin className="w-4 h-4" />
+                        <span>{distance.toFixed(1)} miles away</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm">
+                        <User className="w-4 h-4 text-muted-foreground" />
+                        <span>Looking for: {getGenderLabel(profile.lookingFor)}</span>
+                      </div>
+                      <div className="text-sm">
+                        <span className="text-muted-foreground">Preference: </span>
+                        <span className="font-medium">{getPreferenceLabel(profile.preference)}</span>
+                      </div>
+                    </div>
+
+                    <p className="text-sm text-muted-foreground line-clamp-3">{profile.bio}</p>
+
+                    <div className="flex gap-2 pt-2">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="flex-1"
+                        onClick={() => navigate({ to: '/chat' })}
+                      >
+                        <MessageCircle className="w-4 h-4 mr-2" />
+                        Message
+                      </Button>
+                      <Button
+                        variant="default"
+                        size="sm"
+                        className="flex-1 bg-courseGreen hover:bg-grassGreen"
+                      >
+                        <Eye className="w-4 h-4 mr-2" />
+                        View Profile
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+        )}
+      </div>
     </div>
   );
 }

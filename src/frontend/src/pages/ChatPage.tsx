@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { useSearchMatches, useGetMessages, useSendMessage } from '../hooks/useQueries';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -23,6 +23,26 @@ export default function ChatPage() {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const currentPrincipal = identity?.getPrincipal().toString();
+
+  // Convert avatar bytes to blob URLs
+  const avatarUrls = useMemo(() => {
+    if (!matches) return {};
+    const urls: Record<number, string> = {};
+    matches.forEach((profile, index) => {
+      if (profile.avatar) {
+        const blob = new Blob([new Uint8Array(profile.avatar)], { type: 'image/jpeg' });
+        urls[index] = URL.createObjectURL(blob);
+      }
+    });
+    return urls;
+  }, [matches]);
+
+  // Cleanup blob URLs on unmount
+  useEffect(() => {
+    return () => {
+      Object.values(avatarUrls).forEach(url => URL.revokeObjectURL(url));
+    };
+  }, [avatarUrls]);
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -115,8 +135,8 @@ export default function ChatPage() {
                     >
                       <div className="flex items-center gap-3">
                         <Avatar>
-                          {profile.avatar ? (
-                            <AvatarImage src={profile.avatar.getDirectURL()} alt="Profile" />
+                          {avatarUrls[index] ? (
+                            <AvatarImage src={avatarUrls[index]} alt="Profile" />
                           ) : (
                             <AvatarImage src="/assets/generated/avatar-placeholder.dim_128x128.png" alt="Avatar" />
                           )}
@@ -146,8 +166,8 @@ export default function ChatPage() {
               <CardHeader className="border-b">
                 <div className="flex items-center gap-3">
                   <Avatar>
-                    {matches[selectedUserIndex].avatar ? (
-                      <AvatarImage src={matches[selectedUserIndex].avatar.getDirectURL()} alt="Profile" />
+                    {avatarUrls[selectedUserIndex] ? (
+                      <AvatarImage src={avatarUrls[selectedUserIndex]} alt="Profile" />
                     ) : (
                       <AvatarImage src="/assets/generated/avatar-placeholder.dim_128x128.png" alt="Avatar" />
                     )}

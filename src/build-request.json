@@ -1,36 +1,308 @@
 {
   "kind": "build_request",
-  "title": "Make Get Started button functional on landing page",
+  "title": "Create comprehensive sign-up page with profile information fields",
+  "projectName": "Lime Greens",
   "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-21",
-      "text": "Add click handler to the Get Started button on the landing page that initiates Internet Identity authentication flow",
+      "id": "REQ-22",
+      "text": "Create a new SignUpPage component that users navigate to when clicking the Get Started button on the landing page",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-user-final"
+          "msg-current"
         ],
         "quotes": [
-          "No the get started button doesn't do anything"
+          "When get started is clicked it goes to a sign up page"
         ]
       },
       "acceptanceCriteria": [
-        "Clicking the Get Started button triggers the Internet Identity login process",
-        "After successful authentication, the user is redirected to either profile setup (if new user) or the MapView page (if existing user)",
-        "The button behavior matches the existing Login button functionality"
+        "SignUpPage component exists in frontend/src/pages/",
+        "Route is configured in App.tsx to navigate to sign-up page",
+        "Get Started button on LandingPage navigates to the sign-up route"
+      ]
+    },
+    {
+      "id": "REQ-23",
+      "text": "Add age input field to the sign-up form with numeric validation",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-current"
+        ],
+        "quotes": [
+          "you input your info; age"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Age field accepts numeric input only",
+        "Field is clearly labeled",
+        "Validation ensures reasonable age range (e.g., 18-100)"
+      ]
+    },
+    {
+      "id": "REQ-24",
+      "text": "Add handicap input field to the sign-up form with numeric validation for golf handicap range",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-current"
+        ],
+        "quotes": [
+          "handicap"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Handicap field accepts numeric input",
+        "Field validates golf handicap range (typically -10 to 54)",
+        "Field is clearly labeled with golf terminology"
+      ]
+    },
+    {
+      "id": "REQ-25",
+      "text": "Add gender selection field with options for male, female, or couple",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-current"
+        ],
+        "quotes": [
+          "if your male, female or a couple"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Selection control (radio buttons or dropdown) includes male, female, and couple options",
+        "Only one option can be selected at a time",
+        "Field is required before form submission"
+      ]
+    },
+    {
+      "id": "REQ-26",
+      "text": "Add seeking preference field with options for male, female, or couple to indicate what type of match the user is looking for",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-current"
+        ],
+        "quotes": [
+          "seaking a male female or couple"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Selection control includes options: male, female, couple",
+        "User can select what type of match they are seeking",
+        "Field is clearly labeled to distinguish from gender field"
+      ]
+    },
+    {
+      "id": "REQ-27",
+      "text": "Add bio textarea field where users can describe their likes, dislikes, themselves, and their ideal golf partner",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-current"
+        ],
+        "quotes": [
+          "likes and dislikes in a bio area where you tell about your self and ideal pair"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Multi-line textarea allows extended text input",
+        "Field includes placeholder text or label guiding users to share likes, dislikes, and ideal match description",
+        "Character limit is reasonable (e.g., 500-1000 characters)"
+      ]
+    },
+    {
+      "id": "REQ-28",
+      "text": "Add location input section to the sign-up form for capturing user's geographical location",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-current"
+        ],
+        "quotes": [
+          "Location section"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Location input field accepts address or coordinates",
+        "Field is clearly labeled",
+        "Input validates location format"
+      ]
+    },
+    {
+      "id": "REQ-29",
+      "text": "Add home course input section to the sign-up form where users can specify their primary golf course",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-current"
+        ],
+        "quotes": [
+          "home course section"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Home course field accepts text input for course name",
+        "Field is clearly labeled as home course",
+        "Field allows users to identify their regular golf course"
+      ]
+    },
+    {
+      "id": "REQ-30",
+      "text": "Add profile photo upload option to the sign-up form allowing users to upload an image file",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-current"
+        ],
+        "quotes": [
+          "profile photo upload option"
+        ]
+      },
+      "acceptanceCriteria": [
+        "File input control allows image file selection",
+        "Supported formats include common image types (JPEG, PNG)",
+        "Preview of selected image is displayed before submission",
+        "File size validation prevents oversized uploads"
+      ]
+    },
+    {
+      "id": "REQ-31",
+      "text": "Apply golf-themed styling to the sign-up page consistent with the existing visual design system using golf-inspired colors, typography, and layout patterns",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-current"
+        ],
+        "quotes": [
+          "all with a golf theme to the page"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Page uses golf-themed color palette from existing design system (fairway green, sand tan, grass green)",
+        "Layout and component styling matches existing page patterns",
+        "Visual elements evoke golf and outdoor sporting elegance",
+        "All form components use shadcn/ui components for consistency"
+      ]
+    },
+    {
+      "id": "REQ-32",
+      "text": "Update backend UserProfile type to include age field as Nat (natural number)",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-current"
+        ],
+        "quotes": [
+          "age"
+        ]
+      },
+      "acceptanceCriteria": [
+        "UserProfile type in backend/main.mo includes age: Nat field",
+        "Existing profile creation and update functions handle age field",
+        "Age is persisted and retrievable"
+      ]
+    },
+    {
+      "id": "REQ-33",
+      "text": "Update backend UserProfile type to include lookingFor field matching the Gender type (Male, Female, Couple)",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-current"
+        ],
+        "quotes": [
+          "seaking a male female or couple"
+        ]
+      },
+      "acceptanceCriteria": [
+        "UserProfile type includes lookingFor field of Gender type",
+        "Field stores user's preference for match type",
+        "Existing profile operations handle lookingFor field"
+      ]
+    },
+    {
+      "id": "REQ-34",
+      "text": "Update backend UserProfile type to include homeCourse field as Text for storing user's primary golf course name",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-current"
+        ],
+        "quotes": [
+          "home course section"
+        ]
+      },
+      "acceptanceCriteria": [
+        "UserProfile type includes homeCourse: Text field",
+        "Field stores course name as provided by user",
+        "Profile operations handle homeCourse field"
+      ]
+    },
+    {
+      "id": "REQ-35",
+      "text": "Update backend UserProfile type to include profilePhoto field as ?Blob for storing uploaded profile image data",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-current"
+        ],
+        "quotes": [
+          "profile photo upload option"
+        ]
+      },
+      "acceptanceCriteria": [
+        "UserProfile type includes profilePhoto: ?Blob field for optional image data",
+        "Backend can store and retrieve profile photos",
+        "Photo data is accessible via query functions"
+      ]
+    },
+    {
+      "id": "REQ-36",
+      "text": "Create backend function to save complete user profile including all new fields (age, lookingFor, homeCourse, profilePhoto) when sign-up form is submitted",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-current"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Update or create profile mutation accepts all new fields",
+        "Profile data is validated and stored in stable storage",
+        "Function returns success confirmation or error"
+      ]
+    },
+    {
+      "id": "REQ-37",
+      "text": "Wire sign-up form submission to backend profile creation with validation and error handling",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-current"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Form submission calls backend profile creation mutation",
+        "All required fields are validated before submission",
+        "Success state navigates user to main application",
+        "Error states display helpful messages to user",
+        "Loading states provide feedback during submission"
       ]
     }
   ],
   "constraints": [
-    "Use the existing useInternetIdentity hook for authentication",
-    "Maintain consistency with the Login button's authentication flow",
-    "Do not modify the LandingPage.tsx layout or styling beyond the button functionality"
+    "Maintain single-actor backend architecture in backend/main.mo",
+    "Do not modify immutable frontend paths: frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useInternetIdentity.tsx, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, frontend/src/components/ui",
+    "Use existing Gender type from backend/main.mo for gender and lookingFor fields"
   ],
   "nonGoals": [
-    "Changing the visual appearance of the Get Started button",
-    "Modifying the authentication system or Internet Identity integration",
-    "Adding new user flows beyond the existing authentication pattern"
+    "Email verification or multi-step authentication",
+    "Social media profile import",
+    "Advanced photo editing or filters",
+    "Geolocation API integration for automatic location detection",
+    "Real-time form auto-save",
+    "Multi-language support"
   ],
   "imageRequirements": {
     "required": [],

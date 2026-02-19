@@ -46,16 +46,18 @@ export const Coordinates = IDL.Record({
   'lat' : IDL.Float64,
   'long' : IDL.Float64,
 });
-export const ExternalBlob = IDL.Vec(IDL.Nat8);
 export const UserProfile = IDL.Record({
+  'age' : IDL.Nat,
   'bio' : IDL.Text,
+  'profilePhoto' : IDL.Opt(IDL.Vec(IDL.Nat8)),
+  'homeCourse' : IDL.Text,
   'lookingFor' : Gender,
   'preference' : Preference,
   'genderPreference' : Gender,
   'gender' : Gender,
   'handicap' : IDL.Nat,
   'location' : Coordinates,
-  'avatar' : IDL.Opt(ExternalBlob),
+  'avatar' : IDL.Opt(IDL.Vec(IDL.Nat8)),
 });
 export const Promise = IDL.Record({
   'isLocal' : IDL.Bool,
@@ -127,7 +129,6 @@ export const idlService = IDL.Service({
   'saveCallerUserProfile' : IDL.Func([UserProfile], [], []),
   'searchMatches' : IDL.Func([], [IDL.Vec(UserProfile)], ['query']),
   'sendMessage' : IDL.Func([IDL.Principal, IDL.Text], [], []),
-  'updateProfile' : IDL.Func([UserProfile], [], []),
 });
 
 export const idlInitArgs = [];
@@ -168,16 +169,18 @@ export const idlFactory = ({ IDL }) => {
     'casual' : IDL.Null,
   });
   const Coordinates = IDL.Record({ 'lat' : IDL.Float64, 'long' : IDL.Float64 });
-  const ExternalBlob = IDL.Vec(IDL.Nat8);
   const UserProfile = IDL.Record({
+    'age' : IDL.Nat,
     'bio' : IDL.Text,
+    'profilePhoto' : IDL.Opt(IDL.Vec(IDL.Nat8)),
+    'homeCourse' : IDL.Text,
     'lookingFor' : Gender,
     'preference' : Preference,
     'genderPreference' : Gender,
     'gender' : Gender,
     'handicap' : IDL.Nat,
     'location' : Coordinates,
-    'avatar' : IDL.Opt(ExternalBlob),
+    'avatar' : IDL.Opt(IDL.Vec(IDL.Nat8)),
   });
   const Promise = IDL.Record({
     'isLocal' : IDL.Bool,
@@ -249,7 +252,6 @@ export const idlFactory = ({ IDL }) => {
     'saveCallerUserProfile' : IDL.Func([UserProfile], [], []),
     'searchMatches' : IDL.Func([], [IDL.Vec(UserProfile)], ['query']),
     'sendMessage' : IDL.Func([IDL.Principal, IDL.Text], [], []),
-    'updateProfile' : IDL.Func([UserProfile], [], []),
   });
 };
 

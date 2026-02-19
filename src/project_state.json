@@ -1,19 +1,20 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 9,
+  "projectStateVersion": 11,
   "summary": "Golf social dating app connecting single golfers through online profiles with handicap and social preferences (business, pleasure, casual, romantic). Features gender-based and couples searching, location-based map showing singles by proximity to golf courses, course booking integration, course directory, sponsors page, and event hosting.",
   "architectural_notes": [
     "Social dating platform focused on golf community",
     "Location-based services required for proximity matching",
     "Integration with external golf course booking systems",
     "User authentication and profile management system",
-    "Real-time chat functionality needed"
+    "Real-time chat functionality needed",
+    "Sign-up page required with comprehensive profile data collection",
+    "Profile photo upload and storage functionality needed"
   ],
   "known_issues": [
-    "Post-login pages lack content and functional navigation",
-    "Get Started button on landing page is non-functional"
+    "Post-login pages lack content and functional navigation"
   ],
-  "isFixRequest": true,
+  "isFixRequest": false,
   "existing_features": [
     {
       "id": "feature-create-location-based-map-view-that-displays-online-single-golfers-by-their-proximity-to-the-user-s-location-or-specific-golf-course-locations",
@@ -166,6 +167,94 @@
         "REQ-21"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-create-a-new-signuppage-component-that-users-navigate-to-when-clicking-the-get-started-button-on-the-landing-page",
+      "title": "Create a new SignUpPage component that users navigate to when clicking the Get Started button on the landing page",
+      "reqIds": [
+        "REQ-22"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-age-input-field-to-the-sign-up-form-with-numeric-validation",
+      "title": "Add age input field to the sign-up form with numeric validation",
+      "reqIds": [
+        "REQ-23"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-handicap-input-field-to-the-sign-up-form-with-numeric-validation-for-golf-handicap-range",
+      "title": "Add handicap input field to the sign-up form with numeric validation for golf handicap range",
+      "reqIds": [
+        "REQ-24"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-gender-selection-field-with-options-for-male-female-or-couple",
+      "title": "Add gender selection field with options for male, female, or couple",
+      "reqIds": [
+        "REQ-25"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-seeking-preference-field-with-options-for-male-female-or-couple-to-indicate-what-type-of-match-the-user-is-looking-for",
+      "title": "Add seeking preference field with options for male, female, or couple to indicate what type of match the user is looking for",
+      "reqIds": [
+        "REQ-26"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-bio-textarea-field-where-users-can-describe-their-likes-dislikes-themselves-and-their-ideal-golf-partner",
+      "title": "Add bio textarea field where users can describe their likes, dislikes, themselves, and their ideal golf partner",
+      "reqIds": [
+        "REQ-27"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-location-input-section-to-the-sign-up-form-for-capturing-user-s-geographical-location",
+      "title": "Add location input section to the sign-up form for capturing user's geographical location",
+      "reqIds": [
+        "REQ-28"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-home-course-input-section-to-the-sign-up-form-where-users-can-specify-their-primary-golf-course",
+      "title": "Add home course input section to the sign-up form where users can specify their primary golf course",
+      "reqIds": [
+        "REQ-29"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-profile-photo-upload-option-to-the-sign-up-form-allowing-users-to-upload-an-image-file",
+      "title": "Add profile photo upload option to the sign-up form allowing users to upload an image file",
+      "reqIds": [
+        "REQ-30"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-golf-themed-styling-to-the-sign-up-page-consistent-with-the-existing-visual-design-system-using-golf-inspired-colors-typography-and-layout-patterns",
+      "title": "Apply golf-themed styling to the sign-up page consistent with the existing visual design system using golf-inspired colors, typography, and layout patterns",
+      "reqIds": [
+        "REQ-31"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-wire-sign-up-form-submission-to-backend-profile-creation-with-validation-and-error-handling",
+      "title": "Wire sign-up form submission to backend profile creation with validation and error handling",
+      "reqIds": [
+        "REQ-37"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -249,6 +338,52 @@
       "id": "AR-13",
       "summary": "Add functional content and working buttons/navigation to all pages after user login",
       "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-14",
+      "summary": "Create sign-up page with fields for age, handicap, gender (male/female/couple), seeking preference (male/female/couple), bio for likes/dislikes and ideal match, location, home course, and profile photo upload - all with golf theme",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-25",
+      "summary": "Update backend UserProfile type to include age field as Nat (natural number)",
+      "reqIds": [
+        "REQ-32"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-26",
+      "summary": "Update backend UserProfile type to include lookingFor field matching the Gender type (Male, Female, Couple)",
+      "reqIds": [
+        "REQ-33"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-27",
+      "summary": "Update backend UserProfile type to include homeCourse field as Text for storing user's primary golf course name",
+      "reqIds": [
+        "REQ-34"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-28",
+      "summary": "Update backend UserProfile type to include profilePhoto field as ?Blob for storing uploaded profile image data",
+      "reqIds": [
+        "REQ-35"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-29",
+      "summary": "Create backend function to save complete user profile including all new fields (age, lookingFor, homeCourse, profilePhoto) when sign-up form is submitted",
+      "reqIds": [
+        "REQ-36"
+      ],
       "status": "pending"
     }
   ],

@@ -1,11 +1,17 @@
+import { useNavigate } from '@tanstack/react-router';
 import { useInternetIdentity } from '../hooks/useInternetIdentity';
 import { Button } from '@/components/ui/button';
 import { Heart, Users, MapPin, Calendar } from 'lucide-react';
 
 export default function LandingPage() {
+  const navigate = useNavigate();
   const { login, clear, loginStatus } = useInternetIdentity();
 
   const isLoggingIn = loginStatus === 'logging-in';
+
+  const handleGetStarted = () => {
+    navigate({ to: '/sign-up' });
+  };
 
   const handleAuth = async () => {
     try {
@@ -55,11 +61,10 @@ export default function LandingPage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center mt-12">
             <Button
               size="lg"
-              onClick={handleAuth}
-              disabled={isLoggingIn}
+              onClick={handleGetStarted}
               className="bg-white text-courseGreen hover:bg-sandTan hover:text-white text-lg px-8 py-6 rounded-full shadow-xl transition-all hover:scale-105"
             >
-              {isLoggingIn ? 'Connecting...' : 'Get Started'}
+              Get Started
             </Button>
             <Button
               size="lg"
@@ -68,7 +73,7 @@ export default function LandingPage() {
               disabled={isLoggingIn}
               className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-courseGreen text-lg px-8 py-6 rounded-full shadow-xl transition-all"
             >
-              Sign In
+              {isLoggingIn ? 'Connecting...' : 'Sign In'}
             </Button>
           </div>
 

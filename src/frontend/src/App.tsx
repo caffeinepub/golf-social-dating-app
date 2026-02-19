@@ -2,6 +2,7 @@ import { createRouter, createRoute, createRootRoute, RouterProvider, Outlet, use
 import { useInternetIdentity } from './hooks/useInternetIdentity';
 import { useGetCallerUserProfile } from './hooks/useQueries';
 import LandingPage from './pages/LandingPage';
+import SignUpPage from './pages/SignUpPage';
 import MapView from './pages/MapView';
 import CourseBooking from './pages/CourseBooking';
 import CourseDirectory from './pages/CourseDirectory';
@@ -73,6 +74,12 @@ const landingRoute = createRoute({
   component: LandingPage,
 });
 
+const signUpRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/sign-up',
+  component: SignUpPage,
+});
+
 const protectedRoute = createRoute({
   getParentRoute: () => rootRoute,
   id: 'protected',
@@ -117,6 +124,7 @@ const chatRoute = createRoute({
 
 const routeTree = rootRoute.addChildren([
   landingRoute,
+  signUpRoute,
   protectedRoute.addChildren([
     mapRoute,
     courseBookingRoute,

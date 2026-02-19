@@ -17,7 +17,6 @@ export interface Event {
   'timestamp' : Time,
   'courseName' : string,
 }
-export type ExternalBlob = Uint8Array;
 export type Gender = { 'female' : null } |
   { 'male' : null } |
   { 'couple' : null };
@@ -39,14 +38,17 @@ export interface Promise {
 }
 export type Time = bigint;
 export interface UserProfile {
+  'age' : bigint,
   'bio' : string,
+  'profilePhoto' : [] | [Uint8Array],
+  'homeCourse' : string,
   'lookingFor' : Gender,
   'preference' : Preference,
   'genderPreference' : Gender,
   'gender' : Gender,
   'handicap' : bigint,
   'location' : Coordinates,
-  'avatar' : [] | [ExternalBlob],
+  'avatar' : [] | [Uint8Array],
 }
 export type UserRole = { 'admin' : null } |
   { 'user' : null } |
@@ -96,7 +98,6 @@ export interface _SERVICE {
   'saveCallerUserProfile' : ActorMethod<[UserProfile], undefined>,
   'searchMatches' : ActorMethod<[], Array<UserProfile>>,
   'sendMessage' : ActorMethod<[Principal, string], undefined>,
-  'updateProfile' : ActorMethod<[UserProfile], undefined>,
 }
 export declare const idlService: IDL.ServiceClass;
 export declare const idlInitArgs: IDL.Type[];

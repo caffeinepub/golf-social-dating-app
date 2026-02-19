@@ -7,13 +7,6 @@ export interface None {
     __kind__: "None";
 }
 export type Option<T> = Some<T> | None;
-export class ExternalBlob {
-    getBytes(): Promise<Uint8Array<ArrayBuffer>>;
-    getDirectURL(): string;
-    static fromURL(url: string): ExternalBlob;
-    static fromBytes(blob: Uint8Array<ArrayBuffer>): ExternalBlob;
-    withUploadProgress(onProgress: (percentage: number) => void): ExternalBlob;
-}
 export interface Promise_ {
     isLocal: boolean;
     name: string;
@@ -24,6 +17,12 @@ export interface Coordinates {
     lat: number;
     long: number;
 }
+export interface Event {
+    creator: Principal;
+    description: string;
+    timestamp: Time;
+    courseName: string;
+}
 export interface Message {
     content: string;
     read: boolean;
@@ -31,21 +30,18 @@ export interface Message {
     sender: Principal;
     timestamp: Time;
 }
-export interface Event {
-    creator: Principal;
-    description: string;
-    timestamp: Time;
-    courseName: string;
-}
 export interface UserProfile {
+    age: bigint;
     bio: string;
+    profilePhoto?: Uint8Array;
+    homeCourse: string;
     lookingFor: Gender;
     preference: Preference;
     genderPreference: Gender;
     gender: Gender;
     handicap: bigint;
     location: Coordinates;
-    avatar?: ExternalBlob;
+    avatar?: Uint8Array;
 }
 export enum Gender {
     female = "female",
@@ -81,5 +77,4 @@ export interface backendInterface {
     saveCallerUserProfile(profile: UserProfile): Promise<void>;
     searchMatches(): Promise<Array<UserProfile>>;
     sendMessage(recipient: Principal, content: string): Promise<void>;
-    updateProfile(profile: UserProfile): Promise<void>;
 }

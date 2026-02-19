@@ -1,34 +1,195 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-19T18:54:11.705Z",
+  "generatedAt": "2026-02-19T22:54:58.661Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 1,
-    "implemented": 1,
+    "total": 16,
+    "implemented": 11,
     "items": [
       {
-        "id": "REQ-21",
-        "summary": "Add click handler to the Get Started button on the landing page that initiates Internet Identity authentication flow",
+        "id": "REQ-22",
+        "summary": "Create a new SignUpPage component that users navigate to when clicking the Get Started button on the landing page",
         "status": "implemented",
         "plannedFiles": [
+          "frontend/src/pages/SignUpPage.tsx",
+          "frontend/src/App.tsx",
           "frontend/src/pages/LandingPage.tsx"
         ],
         "matchedFiles": [
+          "frontend/src/pages/SignUpPage.tsx",
+          "frontend/src/App.tsx",
           "frontend/src/pages/LandingPage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-23",
+        "summary": "Add age input field to the sign-up form with numeric validation",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/pages/SignUpPage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/SignUpPage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-24",
+        "summary": "Add handicap input field to the sign-up form with numeric validation for golf handicap range",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/pages/SignUpPage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/SignUpPage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-25",
+        "summary": "Add gender selection field with options for male, female, or couple",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/pages/SignUpPage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/SignUpPage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-26",
+        "summary": "Add seeking preference field with options for male, female, or couple to indicate what type of match the user is looking for",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/pages/SignUpPage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/SignUpPage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-27",
+        "summary": "Add bio textarea field where users can describe their likes, dislikes, themselves, and their ideal golf partner",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/pages/SignUpPage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/SignUpPage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-28",
+        "summary": "Add location input section to the sign-up form for capturing user's geographical location",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/pages/SignUpPage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/SignUpPage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-29",
+        "summary": "Add home course input section to the sign-up form where users can specify their primary golf course",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/pages/SignUpPage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/SignUpPage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-30",
+        "summary": "Add profile photo upload option to the sign-up form allowing users to upload an image file",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/pages/SignUpPage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/SignUpPage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-31",
+        "summary": "Apply golf-themed styling to the sign-up page consistent with the existing visual design system using golf-inspired colors, typography, and layout patterns",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/pages/SignUpPage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/SignUpPage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-32",
+        "summary": "Update backend UserProfile type to include age field as Nat (natural number)",
+        "status": "unknown",
+        "plannedFiles": [],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-33",
+        "summary": "Update backend UserProfile type to include lookingFor field matching the Gender type (Male, Female, Couple)",
+        "status": "unknown",
+        "plannedFiles": [],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-34",
+        "summary": "Update backend UserProfile type to include homeCourse field as Text for storing user's primary golf course name",
+        "status": "unknown",
+        "plannedFiles": [],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-35",
+        "summary": "Update backend UserProfile type to include profilePhoto field as ?Blob for storing uploaded profile image data",
+        "status": "unknown",
+        "plannedFiles": [],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-36",
+        "summary": "Create backend function to save complete user profile including all new fields (age, lookingFor, homeCourse, profilePhoto) when sign-up form is submitted",
+        "status": "unknown",
+        "plannedFiles": [],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-37",
+        "summary": "Wire sign-up form submission to backend profile creation with validation and error handling",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/pages/SignUpPage.tsx",
+          "frontend/src/hooks/useQueries.ts"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/SignUpPage.tsx"
         ]
       }
     ]
   },
   "changedFiles": [
+    "backend/main.mo",
+    "backend/migration.mo",
     "build-request.json",
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
+    "frontend/src/App.tsx",
+    "frontend/src/backend.d.ts",
+    "frontend/src/backend.ts",
+    "frontend/src/components/ProfileSetup.tsx",
+    "frontend/src/declarations/backend.did.d.ts",
+    "frontend/src/declarations/backend.did.js",
+    "frontend/src/pages/ChatPage.tsx",
     "frontend/src/pages/LandingPage.tsx",
+    "frontend/src/pages/MapView.tsx",
+    "frontend/src/pages/SignUpPage.tsx",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",
